@@ -8,9 +8,7 @@ use Livewire\WithPagination;
 
 class UmkmList extends Component
 {
-    use WithPagination;
-
-    protected $paginationTheme = 'bootstrap'; // Use the bootstrap theme for pagination (optional)
+    use WithPagination; // Use the bootstrap theme for pagination (optional)
 
     public function render()
     {

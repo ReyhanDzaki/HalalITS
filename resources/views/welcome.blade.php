@@ -6,9 +6,30 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <link rel="stylesheet" href="{{ mix('resources/css/app.css') }}">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
     <title>Laravel</title>
     @livewireStyles
+    <style>
+        #map {
+            height: 600px;
+        }
+    </style>
 </head>
+{{-- logic for randoming the cards --}}
+@php
+    $allIds = App\Models\Umkm::pluck('id')->toArray();
+
+    $randomIds = [];
+    while (count($randomIds) < 3 && count($allIds) > 0) {
+        $randomKey = array_rand($allIds);
+        $randomId = $allIds[$randomKey];
+        if (!in_array($randomId, $randomIds)) {
+            $randomIds[] = $randomId;
+        }
+        unset($allIds[$randomKey]);
+    }
+@endphp
 
 <body>
     <div class="">
@@ -16,9 +37,43 @@
             @livewire('header')
         </div>
         <div class="flex flex-col justify-center md:gap-12">
-            @livewire('carousel')
-            <div class="md:mx-12 mb-8 flex flex-col md:flex-row md:gap-24 gap-4 items-center justify-center">
+            <div id="map"></div>
+            <div class="md:mx-12 mb-8 flex flex-col md:gap-12 gap-4 items-center justify-center">
+                <div>
+                    <section class="bg-white dark:bg-gray-900">
+                        <div class="px-4 mx-auto max-w-screen-xl text-center">
+                            <h1
+                                class="mb-4 text-4xl font-extrabold tracking-tight leading-none text-gray-900 md:text-5xl lg:text-6xl dark:text-white">
+                                Kami percaya Anda untuk ikut serta halal!</h1>
+                            <p
+                                class="mb-8 text-lg font-normal text-gray-500 lg:text-xl sm:px-16 lg:px-48 dark:text-gray-400">
+                                Bersama Halal ITS Anda bisa menjelajahi aktivitas-aktivitas halal yang akan memukau
+                                anda!</p>
+                        </div>
+                    </section>
+                </div>
+                <div>
+                    @livewire('search-umkm')
+                </div>
 
+                <div class="flex flex-row gap-3">
+                    <span class="flex w-3 h-3 me-3 bg-gray-200 rounded-full"></span>
+                    <span class="flex w-3 h-3 me-3 bg-gray-900 rounded-full dark:bg-gray-700"></span>
+                    <span class="flex w-3 h-3 me-3 bg-blue-600 rounded-full"></span>
+                    <span class="flex w-3 h-3 me-3 bg-green-500 rounded-full"></span>
+                    <span class="flex w-3 h-3 me-3 bg-red-500 rounded-full"></span>
+                    <span class="flex w-3 h-3 me-3 bg-purple-500 rounded-full"></span>
+                    <span class="flex w-3 h-3 me-3 bg-indigo-500 rounded-full"></span>
+                    <span class="flex w-3 h-3 me-3 bg-yellow-300 rounded-full"></span>
+                    <span class="flex w-3 h-3 me-3 bg-teal-500 rounded-full"></span>
+
+                </div>
+                <div class="flex flex-col md:flex-row gap-4">
+                    @foreach ($randomIds as $id)
+                        @php $umkm = App\Models\Umkm::find($id); @endphp
+                        <livewire:card :umkm="$umkm" />
+                    @endforeach
+                </div>
             </div>
         </div>
         <div class="mt-12">
@@ -27,5 +82,35 @@
     </div>
     @livewireScripts
 </body>
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+<script>
+    // Initialize the map and set its view to Surabaya, Indonesia
+    var map = L.map('map').setView([-7.2575, 112.7521], 13);
+
+    // Add a tile layer to the map
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '© OpenStreetMap contributors'
+    }).addTo(map);
+
+    // Add a marker to the map
+    var marker = L.marker([-7.2575, 112.7521]).addTo(map);
+    var bakso = L.marker([-7.2175, 112.7521]).addTo(map);
+
+    // Add a popup to the marker
+    marker.bindPopup("<b>Hello Surabaya!</b><br>I am a popup.").openPopup();
+
+    // Add a popup to the map itself
+    var popup = L.popup();
+
+    function onMapClick(e) {
+        popup
+            .setLatLng(e.latlng)
+            .setContent("You clicked the map at " + e.latlng.toString())
+            .openOn(map);
+    }
+
+    map.on('click', onMapClick);
+</script>
+
 
 </html>
