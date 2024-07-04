@@ -1,9 +1,8 @@
-<div class="bg-gray-50 ">
-
+<div class="bg-gray-50 flex justify-center">
     <div class="font-sans">
         <div class="p-4 lg:max-w-7xl max-w-2xl max-lg:mx-auto">
-            <div class="ml-20 my-2">
-                <nav class="flex" aria-label="Breadcrumb">
+            <div class="md:ml-20 :my-2">
+                <nav class="md:flex" aria-label="Breadcrumb">
                     <ol class="inline-flex items-center space-x-1 md:space-x-2 rtl:space-x-reverse">
                         <li class="inline-flex items-center">
                             <a href="#"
@@ -26,18 +25,6 @@
                                 </svg>
                                 <a href="{{ route('binaan.list') }}"
                                     class="ms-1 text-sm font-medium text-gray-700 hover:text-primary-600 dark:text-gray-400 dark:hover:text-white md:ms-2">Catalog</a>
-                            </div>
-                        </li>
-                        <li aria-current="page">
-                            <div class="flex items-center">
-                                <svg class="h-5 w-5 text-gray-400 rtl:rotate-180" aria-hidden="true"
-                                    xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
-                                    viewBox="0 0 24 24">
-                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                        stroke-width="2" d="m9 5 7 7-7 7" />
-                                </svg>
-                                <span class="ms-1 text-sm font-medium text-gray-500 dark:text-gray-400 md:ms-2">List
-                                    UMKM</span>
                             </div>
                         </li>
                         <li aria-current="page">
@@ -138,7 +125,7 @@
 
                     <div class="flex flex-wrap gap-4 mt-8">
                         <a href="https://wa.me/{{ $no_wa }}" type="button"
-                            class="flex flex-row items-center min-w-[200px] gap-3 cursor-pointer px-4 py-3 bg-yellow-300 hover:bg-yellow-400 text-black text-md font-semibold rounded">
+                            class="flex flex-row items-center md:min-w-[200px] min-w-full gap-3 cursor-pointer px-4 py-3 bg-yellow-300 hover:bg-yellow-400 text-black text-md font-semibold rounded">
                             <div class="w-10">
                                 <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
@@ -155,7 +142,7 @@
                             </div> Kontak Kami!
                         </a>
                         <button type="button"
-                            class="min-w-[200px] px-4 py-2.5 border border-yellow-300 bg-transparent text-yellow-300 text-sm font-semibold rounded">Keranjang?</button>
+                            class="md:min-w-[200px] min-w-full px-4 py-2.5 border border-yellow-300 bg-transparent text-yellow-300 text-sm font-semibold rounded">Keranjang?</button>
                     </div>
 
                     <div class="mt-8">
@@ -177,8 +164,7 @@
                                 aria-labelledby="accordion-collapse-heading-1">
                                 <div
                                     class="p-5 border border-b-0 border-gray-200 dark:border-gray-700 dark:bg-gray-900">
-                                    <p class="mb-2 text-black dark:text-gray-400">{{ $umkm->nama_umkm }} adalah UMKM
-                                        yang berasal dari {{ $umkm->kota }}, menyediakan {{ $umkm->nama_produk }} dan
+                                    <p class="mb-2 text-black dark:text-gray-400">UMKM yang dimiliki oleh <span class="font-bold"> {{ $umkm->nama_pemilik }} </span> berasal dari {{ $umkm->kota }}, menyediakan <span class="font-bold"> {{ $umkm->nama_produk }} </span> dan
                                         berbagai produk lainya!</p>
                                     {{-- <p class="mb-2 text-black dark:text-gray-400">Check out this guide to learn how
                                         to <a href="/docs/getting-started/introduction/"
@@ -293,90 +279,12 @@
                     </div>
 
                     <div class="mt-8">
-                        <ul class="flex">
-                            <li
-                                class=" font-semibold text-sm text-white bg-gray-800 py-3 px-8 border-b-2 border-yellow-300 cursor-pointer transition-all">
-                                Reviews</li>
-                            <li class=" font-semibold text-sm py-3 px-8 cursor-pointer">Sellter</li>
-                        </ul>
-
-                        <div class="mt-8">
-                            <h3 class="text-xl font-semibold ">Reviews(10)</h3>
-
-                            <div class="space-y-3 mt-4">
-                                <div class="flex items-center">
-                                    <p class="text-sm  font-semibold">5.0</p>
-                                    <svg class="w-5 fill-yellow-300 ml-1" viewBox="0 0 14 13" fill="none"
-                                        xmlns="http://www.w3.org/2000/svg">
-                                        <path
-                                            d="M7 0L9.4687 3.60213L13.6574 4.83688L10.9944 8.29787L11.1145 12.6631L7 11.2L2.8855 12.6631L3.00556 8.29787L0.342604 4.83688L4.5313 3.60213L7 0Z" />
-                                    </svg>
-                                    <div class="bg-gray-400 rounded w-full h-2 ml-3">
-                                        <div class="w-2/3 h-full rounded bg-yellow-300"></div>
-                                    </div>
-                                    <p class="text-sm  font-semibold ml-3">66%</p>
-                                </div>
-
-                                <div class="flex items-center">
-                                    <p class="text-sm  font-semibold">4.0</p>
-                                    <svg class="w-5 fill-yellow-300 ml-1" viewBox="0 0 14 13" fill="none"
-                                        xmlns="http://www.w3.org/2000/svg">
-                                        <path
-                                            d="M7 0L9.4687 3.60213L13.6574 4.83688L10.9944 8.29787L11.1145 12.6631L7 11.2L2.8855 12.6631L3.00556 8.29787L0.342604 4.83688L4.5313 3.60213L7 0Z" />
-                                    </svg>
-                                    <div class="bg-gray-400 rounded w-full h-2 ml-3">
-                                        <div class="w-1/3 h-full rounded bg-yellow-300"></div>
-                                    </div>
-                                    <p class="text-sm  font-semibold ml-3">33%</p>
-                                </div>
-
-                                <div class="flex items-center">
-                                    <p class="text-sm  font-semibold">3.0</p>
-                                    <svg class="w-5 fill-yellow-300 ml-1" viewBox="0 0 14 13" fill="none"
-                                        xmlns="http://www.w3.org/2000/svg">
-                                        <path
-                                            d="M7 0L9.4687 3.60213L13.6574 4.83688L10.9944 8.29787L11.1145 12.6631L7 11.2L2.8855 12.6631L3.00556 8.29787L0.342604 4.83688L4.5313 3.60213L7 0Z" />
-                                    </svg>
-                                    <div class="bg-gray-400 rounded w-full h-2 ml-3">
-                                        <div class="w-1/6 h-full rounded bg-yellow-300"></div>
-                                    </div>
-                                    <p class="text-sm  font-semibold ml-3">16%</p>
-                                </div>
-
-                                <div class="flex items-center">
-                                    <p class="text-sm  font-semibold">2.0</p>
-                                    <svg class="w-5 fill-yellow-300 ml-1" viewBox="0 0 14 13" fill="none"
-                                        xmlns="http://www.w3.org/2000/svg">
-                                        <path
-                                            d="M7 0L9.4687 3.60213L13.6574 4.83688L10.9944 8.29787L11.1145 12.6631L7 11.2L2.8855 12.6631L3.00556 8.29787L0.342604 4.83688L4.5313 3.60213L7 0Z" />
-                                    </svg>
-                                    <div class="bg-gray-400 rounded w-full h-2 ml-3">
-                                        <div class="w-1/12 h-full rounded bg-yellow-300"></div>
-                                    </div>
-                                    <p class="text-sm  font-semibold ml-3">8%</p>
-                                </div>
-
-                                <div class="flex items-center">
-                                    <p class="text-sm  font-semibold">1.0</p>
-                                    <svg class="w-5 fill-yellow-300 ml-1" viewBox="0 0 14 13" fill="none"
-                                        xmlns="http://www.w3.org/2000/svg">
-                                        <path
-                                            d="M7 0L9.4687 3.60213L13.6574 4.83688L10.9944 8.29787L11.1145 12.6631L7 11.2L2.8855 12.6631L3.00556 8.29787L0.342604 4.83688L4.5313 3.60213L7 0Z" />
-                                    </svg>
-                                    <div class="bg-gray-400 rounded w-full h-2 ml-3">
-                                        <div class="w-[6%] h-full rounded bg-yellow-300"></div>
-                                    </div>
-                                    <p class="text-sm  font-semibold ml-3">6%</p>
-                                </div>
-                            </div>
-                        </div>
-
                         <div class="flex items-start mt-8">
                             <img src="https://readymadeui.com/team-2.webp"
                                 class="w-12 h-12 rounded-full border-2 border-white" />
 
                             <div class="ml-3">
-                                <h4 class="text-sm font-semibold ">John Doe</h4>
+                                <h4 class="text-sm font-semibold ">{{$umkm -> nama_pemilik}}</h4>
                                 <div class="flex space-x-1 mt-1">
                                     <svg class="w-4 fill-yellow-300" viewBox="0 0 14 13" fill="none"
                                         xmlns="http://www.w3.org/2000/svg">
@@ -393,28 +301,26 @@
                                         <path
                                             d="M7 0L9.4687 3.60213L13.6574 4.83688L10.9944 8.29787L11.1145 12.6631L7 11.2L2.8855 12.6631L3.00556 8.29787L0.342604 4.83688L4.5313 3.60213L7 0Z" />
                                     </svg>
-                                    <svg class="w-4 fill-[#CED5D8]" viewBox="0 0 14 13" fill="none"
+                                    <svg class="w-4 fill-yellow-300" viewBox="0 0 14 13" fill="none"
                                         xmlns="http://www.w3.org/2000/svg">
                                         <path
                                             d="M7 0L9.4687 3.60213L13.6574 4.83688L10.9944 8.29787L11.1145 12.6631L7 11.2L2.8855 12.6631L3.00556 8.29787L0.342604 4.83688L4.5313 3.60213L7 0Z" />
                                     </svg>
-                                    <svg class="w-4 fill-[#CED5D8]" viewBox="0 0 14 13" fill="none"
+                                    <svg class="w-4 fill-yellow-300" viewBox="0 0 14 13" fill="none"
                                         xmlns="http://www.w3.org/2000/svg">
                                         <path
                                             d="M7 0L9.4687 3.60213L13.6574 4.83688L10.9944 8.29787L11.1145 12.6631L7 11.2L2.8855 12.6631L3.00556 8.29787L0.342604 4.83688L4.5313 3.60213L7 0Z" />
                                     </svg>
-                                    <p class="text-xs !ml-2 font-semibold ">2 mins ago</p>
+                                    <p class="text-xs !ml-2 font-semibold "> - {{$umkm->tipe_binaan}}</p>
                                 </div>
-                                <p class="text-xs mt-4 ">The service was amazing. I never had to wait that long for my
-                                    food. The staff was friendly and attentive, and the delivery was impressively
-                                    prompt.</p>
+                                <p class="text-xs mt-4 ">Umkm saya terdaftar sejak {{$umkm -> created_at}}</p>
                             </div>
                         </div>
-
-                        <button type="button"
-                            class="w-full mt-8 px-4 py-2.5 bg-transparent border border-yellow-300 text-yellow-300 font-semibold rounded">Read
-                            all reviews</button>
-                    </div>
+                         <ul class="flex my-2 md:my-6">
+                            <a href="{{ route('binaan.list') }}"
+                                class=" font-semibold text-sm text-white bg-gray-800 py-3 px-8 border-b-2 border-yellow-300 cursor-pointer transition-all">
+                                Kembali</a>
+                        </ul>
                 </div>
             </div>
         </div>

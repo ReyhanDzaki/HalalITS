@@ -2,7 +2,29 @@
 
 </div> --}}
 <section class="bg-gray-50 py-8 antialiased dark:bg-gray-900 md:py-12">
+
     <div class="mx-auto max-w-screen-xl px-4 2xl:px-0">
+        <div>
+            <div>
+                <form>
+                    <label for="default-search"
+                        class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Search</label>
+                    <div class="relative">
+                        <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                            <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true"
+                                xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                    stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
+                            </svg>
+                        </div>
+                        <input wire:model.live="search" type="text" id="default-search"
+                            class="block md:w-[32rem] w-full p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                            placeholder="Cari umkm mu disini.." required />
+
+                    </div>
+                </form><br>
+            </div>
+        </div>
         <!-- Heading & Filters -->
         <div class="mb-4 items-end justify-between space-y-4 sm:flex sm:space-y-0 md:mb-8">
             <div>
@@ -32,16 +54,7 @@
                             </div>
                         </li>
                         <li aria-current="page">
-                            <div class="flex items-center">
-                                <svg class="h-5 w-5 text-gray-400 rtl:rotate-180" aria-hidden="true"
-                                    xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
-                                    viewBox="0 0 24 24">
-                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                        stroke-width="2" d="m9 5 7 7-7 7" />
-                                </svg>
-                                <span class="ms-1 text-sm font-medium text-gray-500 dark:text-gray-400 md:ms-2">List
-                                    UMKM</span>
-                            </div>
+
                         </li>
                     </ol>
                 </nav>
@@ -115,12 +128,11 @@
                 </div>
             </div>
         </div>
-        <div class="mb-4 grid gap-4 sm:grid-cols-2 md:mb-8 lg:grid-cols-3 xl:grid-cols-4">
+        <div class="mb-4 grid gap-4 grid-cols-2 md:mb-8 lg:grid-cols-3 xl:grid-cols-4">
             {{-- card --}}
-            @foreach ($umkms as $umkm)
-                <livewire:card :umkm="$umkm" :key="$umkm->id" />
-            @endforeach
-
+                @foreach ($umkms as $umkm)
+                    <livewire:card :umkm="$umkm" :key="$umkm->id" />
+                @endforeach
 
         </div>
         {{ $umkms->links('pagination::simple-tailwind') }}

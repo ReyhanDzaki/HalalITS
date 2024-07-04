@@ -13,6 +13,7 @@
     <style>
         #map {
             height: 600px;
+            z-index: 0;
         }
     </style>
 </head>
@@ -21,7 +22,7 @@
     $allIds = App\Models\Umkm::pluck('id')->toArray();
 
     $randomIds = [];
-    while (count($randomIds) < 3 && count($allIds) > 0) {
+    while (count($randomIds) < 4 && count($allIds) > 0) {
         $randomKey = array_rand($allIds);
         $randomId = $allIds[$randomKey];
         if (!in_array($randomId, $randomIds)) {
@@ -31,16 +32,16 @@
     }
 @endphp
 
-<body>
+<body class="bg-gray-100">
     <div class="">
         <div class="md:mt-20 mt-4">
             @livewire('header')
         </div>
         <div class="flex flex-col justify-center md:gap-12">
-            <div id="map"></div>
+            <div class="md:w-full w-full" id="map"></div>
             <div class="md:mx-12 mb-8 flex flex-col md:gap-12 gap-4 items-center justify-center">
                 <div>
-                    <section class="bg-white dark:bg-gray-900">
+                    <section class=" my-6 dark:bg-gray-900">
                         <div class="px-4 mx-auto max-w-screen-xl text-center">
                             <h1
                                 class="mb-4 text-4xl font-extrabold tracking-tight leading-none text-gray-900 md:text-5xl lg:text-6xl dark:text-white">
@@ -52,7 +53,7 @@
                         </div>
                     </section>
                 </div>
-                <div>
+                <div class="text-left">
                     @livewire('search-umkm')
                 </div>
 
@@ -68,7 +69,8 @@
                     <span class="flex w-3 h-3 me-3 bg-teal-500 rounded-full"></span>
 
                 </div>
-                <div class="flex flex-col md:flex-row gap-4">
+                @livewire('trusted-by')
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12">
                     @foreach ($randomIds as $id)
                         @php $umkm = App\Models\Umkm::find($id); @endphp
                         <livewire:card :umkm="$umkm" />

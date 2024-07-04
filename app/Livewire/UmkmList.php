@@ -2,18 +2,43 @@
 
 namespace App\Livewire;
 
-use Livewire\Component;
 use App\Models\Umkm;
+use Livewire\Attributes\Url;
+use Livewire\Component;
 use Livewire\WithPagination;
 
 class UmkmList extends Component
 {
-    use WithPagination; // Use the bootstrap theme for pagination (optional)
+    use WithPagination;
+
+    #[Url(as:'s', history :true, keep: true)]
+    public $search ='';
+
+    protected $queryString = ['search']; // Enable query string parameter binding
+
+
+    public function getQuery()
+    {
+        $query = Umkm::query();
+
+
+        if ($this->search) {
+            $search = strtolower($this->search);
+            $query->whereRaw('LOWER(nama_umkm) LIKE ?', ["%{$search}%"])
+                  ->orWhereRaw('LOWER(nama_produk) LIKE ?', ["%{$search}%"])
+                  ->orWhereRaw('LOWER(nama_pemilik) LIKE ?', ["%{$search}%"]);
+        }
+
+
+        return $query;
+    }
 
     public function render()
     {
-        $umkms = Umkm::paginate(12); // Fetch 15 UMKM records per page
+        $umkms = $this->getQuery()->paginate(12); // Paginate results
 
-        return view('livewire.umkm-list', ['umkms' => $umkms])->layout('layouts.app');
+        return view('livewire.umkm-list', [
+            'umkms' => $umkms,
+        ])->layout('layouts.app');
     }
 }

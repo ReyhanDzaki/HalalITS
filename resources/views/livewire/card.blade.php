@@ -1,4 +1,4 @@
-      <div class="rounded-lg border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-700 dark:bg-gray-800">
+      <div class="rounded-lg border border-gray-200 bg-white p-6 grid grid-cols-1 shadow-sm dark:border-gray-700 dark:bg-gray-800">
           <div class="h-56 flex items-center justify-center w-full">
               <svg class="w-32 h-32 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
                   width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
@@ -48,7 +48,9 @@
               </div>
 
               <a href="#"
-                  class="text-lg font-semibold leading-tight text-gray-900 hover:underline dark:text-white">{{ strlen($umkm->nama_umkm) > 25 ? substr($umkm->nama_umkm, 0, 25) . '...' : $umkm->nama_umkm }}</a>
+                  class="text-lg font-semibold md:block hidden lg:visible xl:visible 2xl:visible leading-tight text-gray-900 hover:underline dark:text-white">{{ strlen($umkm->nama_umkm) > 25 ? substr($umkm->nama_umkm, 0, 25) . '...' : $umkm->nama_umkm }}</a>
+              <a href="#"
+                  class="text-lg font-semibold visible md:hidden leading-tight text-gray-900 hover:underline dark:text-white">{{ strlen($umkm->nama_umkm) > 10 ? substr($umkm->nama_umkm, 0, 10) . '...' : $umkm->nama_umkm }}</a>
 
               <div class="mt-2 flex items-center gap-2">
                   <div class="flex items-center">
@@ -83,7 +85,7 @@
                       </svg>
                   </div>
 
-                  <p class="text-sm font-medium text-gray-900 dark:text-white">5.0</p>
+                  <p class="text-sm hidden md:visible font-medium text-gray-900 dark:text-white">5.0</p>
                   <p class="text-sm font-medium text-gray-500 dark:text-gray-400">(455)</p>
               </div>
 
@@ -371,21 +373,21 @@
                   </li>
 
                   <li class="flex items-center gap-2">
-                      <svg class="w-4 h-4 text-gray-500 dark:text-white" aria-hidden="true"
+                      <svg class="w-4 h-4  hidden md:flex text-gray-500 dark:text-white" aria-hidden="true"
                           xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
                           viewBox="0 0 24 24">
                           <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
                               stroke-width="2" d="m8 8-4 4 4 4m8 0 4-4-4-4m-2-3-4 14" />
                       </svg>
 
-                      <p class="text-sm font-medium text-gray-500 dark:text-gray-400">{{$umkm -> no_umkm}}</p>
+                      <p class="text-sm font-medium hidden md:flex text-gray-500 dark:text-gray-400">{{$umkm -> no_umkm}}</p>
                   </li>
               </ul>
 
-              <div class="mt-4 flex items-center justify-between gap-4">
+              <div class="mt-4 flex items-center justify-between md:gap-3">
                   <p class="text-2xl font-extrabold leading-tight text-gray-900 dark:text-white">{{$umkm-> id}}</p>
                   <a href="{{ route('binaan.detail', $umkm->no_umkm) }}"
-                      class="rounded-xl bg-gray-200  ring-2 ring-gray-400 hover:ring-yellow-300 p-2">View Details</a>
+                      class="rounded-xl bg-gray-200 text-center ring-2 ring-gray-400 hover:ring-yellow-300 px-0.5 md:px-2 pt-2 md:p-2"><p class="mb-2 md:mb-0">View Details</p></a>
               </div>
           </div>
       </div>
