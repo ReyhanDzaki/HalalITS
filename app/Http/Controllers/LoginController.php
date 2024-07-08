@@ -17,7 +17,7 @@ class LoginController extends Controller
         $credentials = $request->validate([
             'email' => ['required', 'string', 'email'],
             'password' => ['required', 'string'],
-        ]);
+        ]); //map to what hak akses
 
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();

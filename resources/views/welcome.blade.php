@@ -7,13 +7,32 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <link rel="stylesheet" href="{{ mix('resources/css/app.css') }}">
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
-    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-    <title>Laravel</title>
+    <title>Halal ITS</title>
     @livewireStyles
     <style>
+        html,
+        body {
+            height: 370px;
+            padding: 0;
+            margin: 0;
+        }
+
         #map {
-            height: 600px;
-            z-index: 0;
+            height: 720px;
+            width: 1080px;
+            overflow: hidden;
+            float: left;
+            border: thin solid #333;
+        }
+
+        #capture {
+            height: 360px;
+            width: 480px;
+            overflow: hidden;
+            float: left;
+            background-color: #ECECFB;
+            border: thin solid #333;
+            border-left: none;
         }
     </style>
 </head>
@@ -38,7 +57,12 @@
             @livewire('header')
         </div>
         <div class="flex flex-col justify-center md:gap-12">
-            <div class="md:w-full w-full" id="map"></div>
+            <div class="flex flex-row justify-center">
+                <iframe src="https://www.google.com/maps/d/u/0/embed?mid=1BYA1-9CRrR9grEdmn5A128fd00RLF4I&ehbc=2E312F"
+                    width="640" height="480"></iframe>
+                <div class="md:w-full w-full" id="map"></div>
+                <div id="capture"></div>
+            </div>
             <div class="md:mx-12 mb-8 flex flex-col md:gap-12 gap-4 items-center justify-center">
                 <div>
                     <section class=" my-6 dark:bg-gray-900">
@@ -84,35 +108,30 @@
     </div>
     @livewireScripts
 </body>
-<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 <script>
-    // Initialize the map and set its view to Surabaya, Indonesia
-    var map = L.map('map').setView([-7.2575, 112.7521], 13);
+    var map;
+    var src = 'https://developers.google.com/maps/documentation/javascript/examples/kml/westcampus.kml';
 
-    // Add a tile layer to the map
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '© OpenStreetMap contributors'
-    }).addTo(map);
+    function initMap() {
+        map = new google.maps.Map(document.getElementById('map'), {
+            center: new google.maps.LatLng(-19.257753, 146.823688),
+            zoom: 2,
+            mapTypeId: 'terrain'
+        });
 
-    // Add a marker to the map
-    var marker = L.marker([-7.2575, 112.7521]).addTo(map);
-    var bakso = L.marker([-7.2175, 112.7521]).addTo(map);
-
-    // Add a popup to the marker
-    marker.bindPopup("<b>Hello Surabaya!</b><br>I am a popup.").openPopup();
-
-    // Add a popup to the map itself
-    var popup = L.popup();
-
-    function onMapClick(e) {
-        popup
-            .setLatLng(e.latlng)
-            .setContent("You clicked the map at " + e.latlng.toString())
-            .openOn(map);
+        var kmlLayer = new google.maps.KmlLayer(src, {
+            suppressInfoWindows: true,
+            preserveViewport: false,
+            map: map
+        });
+        kmlLayer.addListener('click', function(event) {
+            var content = event.featureData.infoWindowHtml;
+            var testimonial = document.getElementById('capture');
+            testimonial.innerHTML = content;
+        });
     }
-
-    map.on('click', onMapClick);
 </script>
-
+<script async
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBTbWGJvHGcMO0cuqU__Mb5Voqo6Lw16nI&callback=initMap"></script>
 
 </html>
