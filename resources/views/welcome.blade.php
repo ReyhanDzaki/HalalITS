@@ -132,6 +132,6 @@
     }
 </script>
 <script async
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBTbWGJvHGcMO0cuqU__Mb5Voqo6Lw16nI&callback=initMap"></script>
+    src="https://maps.googleapis.com/maps/api/js?key=''&callback=initMap"></script>
 
 </html>
