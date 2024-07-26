@@ -58,10 +58,16 @@
         </div>
         <div class="flex flex-col justify-center md:gap-12">
             <div class="flex flex-row justify-center">
-                <iframe src="https://www.google.com/maps/d/u/0/embed?mid=1BYA1-9CRrR9grEdmn5A128fd00RLF4I&ehbc=2E312F"
-                    width="640" height="480"></iframe>
-                <div class="md:w-full w-full" id="map"></div>
-                <div id="capture"></div>
+                <iframe width="300" height="170" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"
+                    src="https://maps.google.com/maps?q='+YOUR_LAT+','+YOUR_LON+'&hl=es&z=14&amp;output=embed">
+                </iframe>
+                <br />
+                <small>
+                    <a href="https://maps.google.com/maps?q='+data.lat+','+data.lon+'&hl=es;z=14&amp;output=embed"
+                        style="color:#0000FF;text-align:left" target="_blank">
+                        See map bigger
+                    </a>
+                </small>
             </div>
             <div class="md:mx-12 mb-8 flex flex-col md:gap-12 gap-4 items-center justify-center">
                 <div>
@@ -131,7 +137,6 @@
         });
     }
 </script>
-<script async
-    src="https://maps.googleapis.com/maps/api/js?key=''&callback=initMap"></script>
+<script async src="https://maps.googleapis.com/maps/api/js?key=''&callback=initMap"></script>
 
 </html>

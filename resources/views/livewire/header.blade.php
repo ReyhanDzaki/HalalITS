@@ -1,13 +1,13 @@
 @php
-    use Illuminate\Support\Str;
+    use Illuminate\Support\Facades\Auth;
 @endphp
 
 <div>
+
     <nav class="bg-white fixed w-full z-50 top-0 start-0 border-gray-200 dark:bg-gray-900">
         <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
             <a href="/" class="flex items-center space-x-3 rtl:space-x-reverse">
-                <img src={{ asset('logoipsum-330.svg') }} class="h-8 mt-0.5" alt="Flowbite Logo" />
-                {{-- <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">Flowbite</span> --}}
+                <img src="{{ asset('logo-PKH.png') }}" class="h-10" alt="Flowbite Logo" />
             </a>
             <button data-collapse-toggle="navbar-default" type="button"
                 class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
@@ -28,20 +28,25 @@
                             aria-current="page">Home</a>
                     </li>
                     <li>
-                        {{-- {{route('binaan')}} --}}
-                        <a href="{{route('binaan.list')}}"
+                        <a href="{{ route('binaan.list') }}"
                             class="{{ Str::contains(request()->path(), 'binaan') ? 'nav-active' : 'nav-deact' }}">
                             Catalog
                         </a>
-
                     </li>
                     <li>
-                        <a href=""
-                            class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Maps</a>
+                        <a href="#"
+                            class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">
+                            Maps
+                        </a>
                     </li>
+                    @auth
+                        <span class="text-gray-600">👋 {{ Auth::user()->name }}</span>
+                    @endauth
+                    @if (Auth::check())
+                        <a href="{{ route('logout') }}" class="text-gray-600 hover:text-gray-900">Logout</a>
+                    @endif
                 </ul>
             </div>
         </div>
     </nav>
-
 </div>

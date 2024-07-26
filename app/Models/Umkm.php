@@ -7,9 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Umkm extends Model
 {
-   protected $table = 'umkms'; // Specify the actual table name
+   protected $table = 'umkms';
 
-    // Optionally define fillable attributes if you're using mass assignment
        protected $fillable = [
         'no_umkm', 'nama_pemilik', 'nama_umkm', 'nama_produk', 'tipe_binaan', 'alamat',
         'desa', 'kecamatan', 'kota', 'status', 'image', 'no_wa', 'email', 'instagram',
