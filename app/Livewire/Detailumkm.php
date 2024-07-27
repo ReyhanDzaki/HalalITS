@@ -10,10 +10,12 @@ class Detailumkm extends Component
 
 {
 public $umkms;
+public $halalCode;
 
  public function mount($no_umkm)
     {
         $this->umkms = Umkm::where('no_umkm', $no_umkm)->firstOrFail();
+        $this->halalCode = explode(',', $this->umkms->sertifikat_halal);
     }
 
     public function render()

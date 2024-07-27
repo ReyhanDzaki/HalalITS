@@ -57,7 +57,10 @@
                         </label>
 
                         <template x-if="showText">
-                            <p class="text-lg">Katakan Peta!</p>
+                            <div class="flex justify-center items-center p-12">
+                                <iframe width="3300" height="470" frameborder="1"
+                                    src = "https://maps.google.com/maps?q={{ $umkm->latitude }},{{ $umkm->longitude }}&hl=es;z=14&amp;output=embed"></iframe>
+                            </div>
                         </template>
                         <template x-if="!showText">
                             <img src="path/to/your/image.jpg" alt="Image" class="w-full">
@@ -164,7 +167,10 @@
                                 aria-labelledby="accordion-collapse-heading-1">
                                 <div
                                     class="p-5 border border-b-0 border-gray-200 dark:border-gray-700 dark:bg-gray-900">
-                                    <p class="mb-2 text-black dark:text-gray-400">UMKM yang dimiliki oleh <span class="font-bold"> {{ $umkm->nama_pemilik }} </span> berasal dari {{ $umkm->kota }}, menyediakan <span class="font-bold"> {{ $umkm->nama_produk }} </span> dan
+                                    <p class="mb-2 text-black dark:text-gray-400">UMKM yang dimiliki oleh <span
+                                            class="font-bold"> {{ $umkm->nama_pemilik }} </span> berasal dari
+                                        {{ $umkm->kota }}, menyediakan <span class="font-bold">
+                                            {{ $umkm->nama_produk }} </span> dan
                                         berbagai produk lainya!</p>
                                     {{-- <p class="mb-2 text-black dark:text-gray-400">Check out this guide to learn how
                                         to <a href="/docs/getting-started/introduction/"
@@ -210,9 +216,21 @@
                                         </h2>
                                         <div id="accordion-nested-collapse-body-1" class="hidden"
                                             aria-labelledby="accordion-nested-collapse-heading-1">
-                                            <div class="p-5 border border-b-0 border-gray-200 dark:border-gray-700">
-                                                <p class="text-black dark:text-gray-400">TODO Tombol Modal (newtab?)
-                                                    PDF</p>
+                                            <div
+                                                class="p-5 border border-b-0 border-gray-200 dark:border-gray-700 flex gap-2 flex-col">
+                                                @foreach ($halalCode as $code)
+                                                    <a class="hover:underline"
+                                                        href="https://bpjph.halal.go.id/search/sertifikat?nama_produk=&nama_pelaku_usaha=&no_sertifikat={{ $code }}&page=1"
+                                                        target="_blank">
+                                                        <div class="flex flex-row gap-3 items-center">
+                                                            <img class="w-6 ring-1 rounded-xl ring-purple-600"
+                                                                src="{{ asset('Logo-Halal.png') }}" alt="">
+                                                            <p class="font-medium">
+                                                                {{ $code }}
+                                                            </p>
+                                                        </div>
+                                                    </a>
+                                                @endforeach
                                             </div>
                                         </div>
                                         <h2 id="accordion-nested-collapse-heading-2">
@@ -284,7 +302,7 @@
                                 class="w-12 h-12 rounded-full border-2 border-white" />
 
                             <div class="ml-3">
-                                <h4 class="text-sm font-semibold ">{{$umkm -> nama_pemilik}}</h4>
+                                <h4 class="text-sm font-semibold ">{{ $umkm->nama_pemilik }}</h4>
                                 <div class="flex space-x-1 mt-1">
                                     <svg class="w-4 fill-yellow-300" viewBox="0 0 14 13" fill="none"
                                         xmlns="http://www.w3.org/2000/svg">
@@ -311,18 +329,18 @@
                                         <path
                                             d="M7 0L9.4687 3.60213L13.6574 4.83688L10.9944 8.29787L11.1145 12.6631L7 11.2L2.8855 12.6631L3.00556 8.29787L0.342604 4.83688L4.5313 3.60213L7 0Z" />
                                     </svg>
-                                    <p class="text-xs !ml-2 font-semibold "> - {{$umkm->tipe_binaan}}</p>
+                                    <p class="text-xs !ml-2 font-semibold "> - {{ $umkm->tipe_binaan }}</p>
                                 </div>
-                                <p class="text-xs mt-4 ">Umkm saya terdaftar sejak {{$umkm -> created_at}}</p>
+                                <p class="text-xs mt-4 ">Umkm saya terdaftar sejak {{ $umkm->created_at }}</p>
                             </div>
                         </div>
-                         <ul class="flex my-2 md:my-6">
+                        <ul class="flex my-2 md:my-6">
                             <a href="{{ route('binaan.list') }}"
                                 class=" font-semibold text-sm text-white bg-gray-800 py-3 px-8 border-b-2 border-yellow-300 cursor-pointer transition-all">
                                 Kembali</a>
                         </ul>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
