@@ -29,6 +29,7 @@ class UmkmList extends Component
                   ->orWhereRaw('LOWER(nama_pemilik) LIKE ?', ["%{$search}%"]);
         }
 
+         $query->orderBy('id', 'ASC');
 
         return $query;
     }

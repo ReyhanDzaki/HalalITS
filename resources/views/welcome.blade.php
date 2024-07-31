@@ -24,16 +24,6 @@
             float: left;
             border: thin solid #333;
         }
-
-        #capture {
-            height: 360px;
-            width: 480px;
-            overflow: hidden;
-            float: left;
-            background-color: #ECECFB;
-            border: thin solid #333;
-            border-left: none;
-        }
     </style>
 </head>
 {{-- logic for randoming the cards --}}
@@ -58,16 +48,7 @@
         </div>
         <div class="flex flex-col justify-center md:gap-12">
             <div class="flex flex-row justify-center">
-                <iframe width="300" height="170" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"
-                    src="https://maps.google.com/maps?q='+YOUR_LAT+','+YOUR_LON+'&hl=es&z=14&amp;output=embed">
-                </iframe>
-                <br />
-                <small>
-                    <a href="https://maps.google.com/maps?q='+data.lat+','+data.lon+'&hl=es;z=14&amp;output=embed"
-                        style="color:#0000FF;text-align:left" target="_blank">
-                        See map bigger
-                    </a>
-                </small>
+                <livewire:map-piece />
             </div>
             <div class="md:mx-12 mb-8 flex flex-col md:gap-12 gap-4 items-center justify-center">
                 <div>
@@ -114,29 +95,4 @@
     </div>
     @livewireScripts
 </body>
-<script>
-    var map;
-    var src = 'https://developers.google.com/maps/documentation/javascript/examples/kml/westcampus.kml';
-
-    function initMap() {
-        map = new google.maps.Map(document.getElementById('map'), {
-            center: new google.maps.LatLng(-19.257753, 146.823688),
-            zoom: 2,
-            mapTypeId: 'terrain'
-        });
-
-        var kmlLayer = new google.maps.KmlLayer(src, {
-            suppressInfoWindows: true,
-            preserveViewport: false,
-            map: map
-        });
-        kmlLayer.addListener('click', function(event) {
-            var content = event.featureData.infoWindowHtml;
-            var testimonial = document.getElementById('capture');
-            testimonial.innerHTML = content;
-        });
-    }
-</script>
-<script async src="https://maps.googleapis.com/maps/api/js?key=''&callback=initMap"></script>
-
 </html>
