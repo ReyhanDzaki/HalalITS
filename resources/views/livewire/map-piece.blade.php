@@ -1,7 +1,7 @@
 <div>
     <div id="map" class="w-max"></div>
 
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCLgptF_i32WYWQ2ECtkJqtEoLcyi3GVDk"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key="></script>
     <script>
         let map;
         let kmlLayer; // Declare kmlLayer in the global scope
