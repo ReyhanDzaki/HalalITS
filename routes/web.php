@@ -11,6 +11,10 @@ Route::get('/', function () {
     return redirect('/home');
 });
 
+Route::get('/debug', function () {
+    return view('debug');
+})->name('debug');
+
 Route::get('/home', function () {
     return view('welcome');
 })->name('home');
@@ -23,3 +27,6 @@ Route::get('/login', Login::class)->name('login');
 Route::post('/login', [Login::class, 'login'])->name('login.submit'); // Add this line for POST method
 Route::get('/register', Register::class)->name('register');
 Route::get('/logout', [Login::class, 'logout'])->name('logout');
+Route::get('storage/kml/locations.kml', function () {
+    return response()->file(storage_path('app/public/kml/locations.kml'));
+});

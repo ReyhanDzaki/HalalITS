@@ -1,41 +1,43 @@
 <div>
     <div id="map" class="w-max"></div>
 
-    <script src="https://maps.googleapis.com/maps/api/js?key="></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCLgptF_i32WYWQ2ECtkJqtEoLcyi3GVDk"></script>
     <script>
         let map;
         let kmlLayer; // Declare kmlLayer in the global scope
 
         function initMap() {
             map = new google.maps.Map(document.getElementById('map'), {
-                center: { lat: -6.2, lng: 106.8 }, // Center the map on a general location
+                center: {
+                    lat: -6.2,
+                    lng: 106.8
+                }, // Center the map on a general location
                 zoom: 8,
-                styles: [
-                    {
+                styles: [{
                         "featureType": "administrative",
                         "elementType": "geometry",
-                        "stylers": [
-                            { "visibility": "off" }
-                        ]
+                        "stylers": [{
+                            "visibility": "off"
+                        }]
                     },
                     {
                         "featureType": "poi",
-                        "stylers": [
-                            { "visibility": "off" }
-                        ]
+                        "stylers": [{
+                            "visibility": "off"
+                        }]
                     },
                     {
                         "featureType": "road",
                         "elementType": "labels.icon",
-                        "stylers": [
-                            { "visibility": "off" }
-                        ]
+                        "stylers": [{
+                            "visibility": "off"
+                        }]
                     },
                     {
                         "featureType": "transit",
-                        "stylers": [
-                            { "visibility": "off" }
-                        ]
+                        "stylers": [{
+                            "visibility": "off"
+                        }]
                     }
                 ]
             });
@@ -50,11 +52,11 @@
             if (kmlLayer) {
                 kmlLayer.setMap(null);
             }
-            console.log(url);
+            console.log("{{ $url }}");
 
             // Create a new KML layer
             kmlLayer = new google.maps.KmlLayer({
-                url: "http://api.flickr.com/services/feeds/geo/?g=322338@N20&lang=en-us&format=feed-georss",
+                url: "{{ $url }}",
                 map: map,
                 suppressInfoWindows: false,
                 preserveViewport: false,

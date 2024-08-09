@@ -25,6 +25,9 @@
             border: thin solid #333;
         }
     </style>
+    <script>
+        var storagePath = "{!! storage_path() !!}";
+    </script>
 </head>
 {{-- logic for randoming the cards --}}
 @php
