@@ -17,7 +17,7 @@
                                     stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
                             </svg>
                         </div>
-                        <input wire:model.live="search" type="text" id="default-search"
+                        <input wire:model.live.debounce.300ms="search" type="text" id="default-search"
                             class="block md:w-[32rem] w-full p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                             placeholder="Cari umkm mu disini.." required />
 
@@ -26,6 +26,7 @@
             </div>
         </div>
         <!-- Heading & Filters -->
+        <!--
         <div class="mb-4 items-end justify-between space-y-4 sm:flex sm:space-y-0 md:mb-8">
             <div>
                 <nav class="flex" aria-label="Breadcrumb">
@@ -128,6 +129,7 @@
                 </div>
             </div>
         </div>
+    -->
         <div class="mb-4 grid gap-4 grid-cols-2 md:mb-8 lg:grid-cols-3 xl:grid-cols-4">
             {{-- card --}}
                 @foreach ($umkms as $umkm)

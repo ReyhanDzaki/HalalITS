@@ -4,27 +4,39 @@ namespace App\Livewire;
 
 use Livewire\Component;
 use App\Models\Umkm;
-
+use App\Models\Photo;
 
 class Detailumkm extends Component
-
 {
-public $umkms;
-public $halalCode;
+    public $umkms;
+    public $photos = [];
+    public $halalCode;
+    public $umkm_id;
 
- public function mount($no_umkm)
+    public function mount($no_umkm)
     {
-        $this->umkms = Umkm::where('no_umkm', $no_umkm)->firstOrFail();
+        // Fetch UMKM by no_umkm
+        $this->umkms = Umkm::where('no_umkm', $no_umkm)->with('photos')->firstOrFail();
+
+        // Split the halal codes
         $this->halalCode = explode(',', $this->umkms->sertifikat_halal);
+
+        // Set the UMKM id for further use
+        $this->umkm_id = $this->umkms->id;
+
+        // Fetch photos associated with this UMKM
+        $this->photos = Photo::where('umkm_id', $this->umkm_id)->get();
     }
 
     public function render()
     {
-         //declare nowa
+        // Convert WhatsApp number
         $no_wa = preg_replace('/^0/', '62', $this->umkms->no_wa);
-         return view('livewire.detailumkm', [
+
+        return view('livewire.detailumkm', [
             'umkm' => $this->umkms,
-            'no_wa' =>$no_wa,
+            'photos' => $this->photos,
+            'no_wa' => $no_wa,
         ])->layout('layouts.app');
     }
 }

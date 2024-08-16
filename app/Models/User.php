@@ -44,4 +44,17 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    /**
+     * Check if the user is an admin.
+     *
+     * @return bool
+     */
+    public function getIsAdminAttribute()
+    {
+        // Define the admin email(s)
+        $adminEmails = ['admin@mail.com'];
+
+        return in_array($this->email, $adminEmails);
+    }
 }

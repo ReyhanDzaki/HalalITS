@@ -18,11 +18,30 @@
         }
 
         #map {
-            height: 720px;
-            width: 1080px;
+            height: 42vh;
+            width: 60rem;
             overflow: hidden;
-            float: left;
             border: thin solid #333;
+            box-sizing: border-box;
+            /* Ensures border is included in the element’s total width and height */
+        }
+
+        /* Media Query for screens up to 768px wide */
+        @media (max-width: 48rem) {
+            #map {
+                margin-top: 4rem;
+                height: 35vh;
+                width: 40rem;
+            }
+        }
+
+        /* Media Query for screens up to 480px wide */
+        @media (max-width: 30rem) {
+            #map {
+                margin-top: 4rem;
+                height: 28vh;
+                width: 20rem;
+            }
         }
     </style>
     <script>
@@ -56,10 +75,12 @@
             <div class="md:mx-12 mb-8 flex flex-col md:gap-12 gap-4 items-center justify-center">
                 <div>
                     <section class=" my-6 dark:bg-gray-900">
-                        <div class="px-4 mx-auto max-w-screen-xl text-center">
+                        <div class="px-4 mx-auto max-w-screen-xl md:text-center">
                             <h1
                                 class="mb-4 text-4xl font-extrabold tracking-tight leading-none text-gray-900 md:text-5xl lg:text-6xl dark:text-white">
-                                Kami percaya Anda untuk ikut serta halal!</h1>
+                                Kami percaya Anda untuk <span
+                                    class="bg-clip-text text-transparent bg-blue-700"> ikut serta
+                                    halal!</span></h1>
                             <p
                                 class="mb-8 text-lg font-normal text-gray-500 lg:text-xl sm:px-16 lg:px-48 dark:text-gray-400">
                                 Bersama Halal ITS Anda bisa menjelajahi aktivitas-aktivitas halal yang akan memukau
@@ -98,4 +119,5 @@
     </div>
     @livewireScripts
 </body>
+
 </html>

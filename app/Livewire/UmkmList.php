@@ -3,7 +3,6 @@
 namespace App\Livewire;
 
 use App\Models\Umkm;
-use Livewire\Attributes\Url;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -11,16 +10,23 @@ class UmkmList extends Component
 {
     use WithPagination;
 
-    #[Url(as:'s', history :true, keep: true)]
-    public $search ='';
+    public $search = '';
+    public $page = 1; // Explicitly declare the page property
 
-    protected $queryString = ['search']; // Enable query string parameter binding
 
+  protected $queryString = [
+    'search' => ['except' => ''],
+    'page' => ['except' => 1] // Include page in query string
+];
+
+ public function updatedSearch()
+    {
+        $this->resetPage(); // Reset pagination when search query is updated
+    }
 
     public function getQuery()
     {
         $query = Umkm::query();
-
 
         if ($this->search) {
             $search = strtolower($this->search);
@@ -29,14 +35,14 @@ class UmkmList extends Component
                   ->orWhereRaw('LOWER(nama_pemilik) LIKE ?', ["%{$search}%"]);
         }
 
-         $query->orderBy('id', 'ASC');
+        $query->orderBy('id', 'ASC');
 
         return $query;
     }
 
     public function render()
     {
-        $umkms = $this->getQuery()->paginate(12); // Paginate results
+        $umkms = $this->getQuery()->paginate(12);
 
         return view('livewire.umkm-list', [
             'umkms' => $umkms,

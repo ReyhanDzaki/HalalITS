@@ -1,7 +1,7 @@
 <div>
-    <div id="map" class="w-max"></div>
+    <div id="map"></div>
 
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCLgptF_i32WYWQ2ECtkJqtEoLcyi3GVDk"></script>
+    <script async src="https://maps.googleapis.com/maps/api/js?key={{ $key }}"></script>
     <script>
         let map;
         let kmlLayer; // Declare kmlLayer in the global scope
@@ -9,10 +9,11 @@
         function initMap() {
             map = new google.maps.Map(document.getElementById('map'), {
                 center: {
-                    lat: -6.2,
-                    lng: 106.8
+                    lat: -7.2756195,
+                    lng: 112.7126837
                 }, // Center the map on a general location
-                zoom: 8,
+                zoom: 12,
+                mapTypeId: 'terrain',
                 styles: [{
                         "featureType": "administrative",
                         "elementType": "geometry",
@@ -49,14 +50,14 @@
 
         function addKmlLayer(url) {
             // Remove any existing KML layer
-            if (kmlLayer) {
-                kmlLayer.setMap(null);
-            }
-            console.log("{{ $url }}");
+            // if (kmlLayer) {
+            //     kmlLayer.setMap(null);
+            // }
+            console.log("{{ $url }}", url);
 
             // Create a new KML layer
             kmlLayer = new google.maps.KmlLayer({
-                url: "{{ $url }}",
+                url: "https://docs.google.com/uc?id=1IJsXapCUACmK5PTTIZU8gJy8RIRq9Qht&amp;export=kml",
                 map: map,
                 suppressInfoWindows: false,
                 preserveViewport: false,

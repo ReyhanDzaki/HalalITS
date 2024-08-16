@@ -63,7 +63,18 @@
                             </div>
                         </template>
                         <template x-if="!showText">
-                            <img src="path/to/your/image.jpg" alt="Image" class="w-full">
+                            <div>
+                                <h3 class="my-3">Produk dari {{ $umkm->nama_umkm }}</h3>
+                                <div class="grid grid-cols-2">
+                                    @foreach ($umkm->photos as $photo)
+                                        <div class="flex flex-col gap-3 justify-center items-center">
+                                            <img src="{{ Storage::url($photo->photo) }}"
+                                                alt="UMKM Photo of {{ $photo->description }}" style="max-width: 200px;">
+                                            <p>{{ $photo->description }}</p>
+                                        </div>
+                                    @endforeach
+                                </div>
+                            </div>
                         </template>
                     </div>
 
@@ -218,19 +229,29 @@
                                             aria-labelledby="accordion-nested-collapse-heading-1">
                                             <div
                                                 class="p-5 border border-b-0 border-gray-200 dark:border-gray-700 flex gap-2 flex-col">
-                                                @foreach ($halalCode as $code)
-                                                    <a class="hover:underline"
-                                                        href="https://bpjph.halal.go.id/search/sertifikat?nama_produk=&nama_pelaku_usaha=&no_sertifikat={{ $code }}&page=1"
-                                                        target="_blank">
-                                                        <div class="flex flex-row gap-3 items-center">
-                                                            <img class="w-6 ring-1 rounded-xl ring-purple-600"
-                                                                src="{{ asset('Logo-Halal.png') }}" alt="">
-                                                            <p class="font-medium">
-                                                                {{ $code }}
-                                                            </p>
-                                                        </div>
-                                                    </a>
-                                                @endforeach
+                                                @php
+                                                    // Define placeholders if applicable
+                                                    $placeholders = ['-', 'N/A', 'None', null]; // Adjust based on expected placeholder values
+                                                @endphp
+
+                                                @if (!array_diff($halalCode, $placeholders))
+                                                    <p>No Halal Certificates</p>
+                                                @else
+                                                    @foreach ($halalCode as $code)
+                                                        <a class="hover:underline"
+                                                            href="https://bpjph.halal.go.id/search/sertifikat?nama_produk=&nama_pelaku_usaha=&no_sertifikat={{ $code }}&page=1"
+                                                            target="_blank">
+                                                            <div class="flex flex-row gap-3 items-center">
+                                                                <img class="w-6 ring-1 rounded-xl ring-purple-600"
+                                                                    src="{{ asset('Logo-Halal.png') }}"
+                                                                    alt="">
+                                                                <p class="font-medium">
+                                                                    {{ $code }}
+                                                                </p>
+                                                            </div>
+                                                        </a>
+                                                    @endforeach
+                                                @endif
                                             </div>
                                         </div>
                                         <h2 id="accordion-nested-collapse-heading-2">
@@ -334,10 +355,17 @@
                                 <p class="text-xs mt-4 ">Umkm saya terdaftar sejak {{ $umkm->created_at }}</p>
                             </div>
                         </div>
-                        <ul class="flex my-2 md:my-6">
+                        <ul class="flex my-2 md:my-6 flex-row justify-between">
                             <a href="{{ route('binaan.list') }}"
                                 class=" font-semibold text-sm text-white bg-gray-800 py-3 px-8 border-b-2 border-yellow-300 cursor-pointer transition-all">
                                 Kembali</a>
+                            @if (Auth::check() && (Auth::id() === $umkm->user_id || Auth::user()->is_admin))
+                                <a href="{{ route('binaan.edit', $umkm->no_umkm) }}"
+                                    class="font-semibold text-sm text-white bg-gray-800 py-3 px-8 border-b-2 border-yellow-300 cursor-pointer transition-all">
+                                    Edit
+                                </a>
+                            @endif
+
                         </ul>
                     </div>
                 </div>
