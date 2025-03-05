@@ -105,7 +105,7 @@
 
                 </div>
                 @livewire('trusted-by')
-                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12">
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-20">
                     @foreach ($randomIds as $id)
                         @php $umkm = App\Models\Umkm::find($id); @endphp
                         <livewire:card :umkm="$umkm" />

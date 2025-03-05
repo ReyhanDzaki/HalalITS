@@ -1,7 +1,7 @@
 <div>
     <div id="map"></div>
 
-    <script async src="https://maps.googleapis.com/maps/api/js?key={{ $key }}"></script>
+    <script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCLgptF_i32WYWQ2ECtkJqtEoLcyi3GVDk"></script>
     <script>
         let map;
         let kmlLayer; // Declare kmlLayer in the global scope

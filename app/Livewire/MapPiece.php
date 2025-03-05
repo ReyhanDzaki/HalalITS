@@ -39,7 +39,8 @@ class MapPiece extends Component
         if ($locations->isEmpty()) {
             // Optionally, add a placemark indicating no data available
             $kml .= '<Placemark>';
-            $kml .= '<name>No Locations Available</name>';
+            $kml .= '<name>No
+             Locations Available</name>';
             $kml .= '<description>No data available for this map.</description>';
             $kml .= '<Point>';
             $kml .= '<coordinates>0,0</coordinates>'; // Default coordinates

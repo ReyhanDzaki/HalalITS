@@ -23,8 +23,29 @@ class UmkmCrud extends Component
     public $photoDescriptions = [];
     public $newPhotos = [];
     public $newPhotoDescriptions = [];
-
+public $search = '';
     public $isModalOpen = false;
+
+ public function updatedSearch()
+    {
+        $this->resetPage(); // Reset pagination when search query is updated
+    }
+
+    public function getQuery()
+    {
+        $query = Umkm::query();
+
+        if ($this->search) {
+            $search = strtolower($this->search);
+            $query->whereRaw('LOWER(nama_umkm) LIKE ?', ["%{$search}%"])
+                  ->orWhereRaw('LOWER(nama_produk) LIKE ?', ["%{$search}%"])
+                  ->orWhereRaw('LOWER(nama_pemilik) LIKE ?', ["%{$search}%"]);
+        }
+
+        $query->orderBy('id', 'ASC');
+
+        return $query;
+    }
 
     protected $rules = [
         // Existing rules
@@ -45,8 +66,10 @@ class UmkmCrud extends Component
 
     public function render()
     {
+       $umkms = $this->getQuery()->paginate(8);
+
         return view('livewire.umkm-crud', [
-            'umkms' => Umkm::paginate(10),
+            'umkms' => $umkms,
         ])->layout('layouts.app');
     }
 
@@ -56,68 +79,104 @@ class UmkmCrud extends Component
         $this->openModal();
     }
 
-    public function store()
-    {
-        $this->validate();
+  public function store()
+{
+    // Validate the form data
 
-        // Handle the image upload
-        if ($this->image) {
-            $this->image = $this->image->store('images', 'public');
-        }
+    $messages = [
+        'no_umkm.required' => 'Nomor UMKM is required.',
+        'no_umkm.unique' => 'Nomor UMKM must be unique.',
+        'nama_pemilik.required' => 'Nama Pemilik is required.',
+        'nama_umkm.required' => 'Nama UMKM is required.',
+        'nama_produk.required' => 'Nama Produk is required.',
+        'tipe_binaan.required' => 'Tipe Binaan is required.',
+        'alamat.required' => 'Alamat is required.',
+        'desa.required' => 'Desa is required.',
+        'kecamatan.required' => 'Kecamatan is required.',
+        'kota.required' => 'Kota is required.',
+        'status.required' => 'Status is required.',
+        'image.image' => 'The image must be an image file.',
+        'image.max' => 'The image size must be less than 2MB.',
+        'no_wa.max' => 'No WhatsApp cannot be longer than 20 characters.',
+        'email.email' => 'Please enter a valid email address.',
+        'sertifikat_halal.max' => 'Sertifikat Halal cannot be longer than 255 characters.',
+        'user_id.required' => 'User is required.',
+        'user_id.exists' => 'User must exist in the system.',
+        'newPhotos.*.image' => 'Each photo must be an image file.',
+        'newPhotos.*.max' => 'Each photo must be smaller than 2MB.',
+        'newPhotoDescriptions.*.max' => 'Each photo description cannot be longer than 255 characters.',
+    ];
 
-        // Create or update the UMKM record
-        $umkm = Umkm::updateOrCreate( // Set to null for new records
-            [
-                'no_umkm' => $this->no_umkm,
-                'nama_pemilik' => $this->nama_pemilik,
-                'nama_umkm' => $this->nama_umkm,
-                'nama_produk' => $this->nama_produk,
-                'tipe_binaan' => $this->tipe_binaan,
-                'alamat' => $this->alamat,
-                'desa' => $this->desa,
-                'kecamatan' => $this->kecamatan,
-                'kota' => $this->kota,
-                'status' => $this->status,
-                'image' => $this->image,
-                'no_wa' => $this->no_wa,
-                'email' => $this->email,
-                'instagram' => $this->instagram,
-                'facebook' => $this->facebook,
-                'bpom' => $this->bpom,
-                'pirt' => $this->pirt,
-                'google_map' => $this->google_map,
-                'tokopedia' => $this->tokopedia,
-                'shopee' => $this->shopee,
-                'bukalapak' => $this->bukalapak,
-                'website' => $this->website,
-                'video' => $this->video,
-                'sertifikat_halal' => $this->sertifikat_halal,
-                'produkdesa' => $this->produkdesa,
-                'user_id' => $this->user_id,
-                'dosen' => $this->dosen,
-                'status_date' => $this->status_date,
-                'latitude' => $this->latitude,
-                'longitude' => $this->longitude,
-                'plus_code' => $this->plus_code,
-                'google_maps' => $this->google_maps,
-            ]
-        );
+    $this->validate([
+        'no_umkm' => 'required|unique:umkms,no_umkm',
+        'nama_pemilik' => 'required|string|max:255',
+        'nama_umkm' => 'required|string|max:255',
+    ],$messages);
 
-        // Handle the photo uploads and descriptions
-        foreach ($this->newPhotos as $index => $photo) {
-            if ($photo) {
-                $photoPath = $photo->store('photos', 'public');
-               Photo::create([
-            'photo' => $photoPath,
-            'description' => $this->newPhotoDescriptions[$index],
-            'umkm_id' => $umkm->id, // Ensure this is set
-        ]);
-            }
-        }
-        $this->closeModal();
-        session()->flash('message', 'UMKM Created Successfully.');
-        $this->resetFields();
+
+    // Handle the image upload (if any)
+    if ($this->image) {
+        $this->image = $this->image->store('images', 'public');
     }
+
+    // Create the new UMKM record
+    $umkm = Umkm::create([
+        'no_umkm' => $this->no_umkm,
+        'nama_pemilik' => $this->nama_pemilik,
+        'nama_umkm' => $this->nama_umkm,
+        'nama_produk' => $this->nama_produk,
+        'tipe_binaan' => $this->tipe_binaan,
+        'alamat' => $this->alamat,
+        'desa' => $this->desa,
+        'kecamatan' => $this->kecamatan,
+        'kota' => $this->kota,
+        'status' => $this->status,
+        'image' => $this->image,  // Store the image URL (if uploaded)
+        'no_wa' => $this->no_wa,
+        'email' => $this->email,
+        'instagram' => $this->instagram,
+        'facebook' => $this->facebook,
+        'bpom' => $this->bpom,
+        'google_map' => $this->google_map,
+        'tokopedia' => $this->tokopedia,
+        'shopee' => $this->shopee,
+        'bukalapak' => $this->bukalapak,
+        'website' => $this->website,
+        'video' => $this->video,
+        'sertifikat_halal' => $this->sertifikat_halal,
+        'produkdesa' => $this->produkdesa,
+        'user_id' => $this->user_id,
+        'dosen' => $this->dosen,
+        'status_date' => $this->status_date,
+        'latitude' => $this->latitude,
+        'longitude' => $this->longitude,
+        'plus_code' => $this->plus_code,
+        'google_maps' => $this->google_maps,
+    ]);
+
+    // Handle the photo uploads and descriptions
+    foreach ($this->newPhotos as $index => $photo) {
+        if ($photo) {
+            $photoPath = $photo->store('photos', 'public');
+            Photo::create([
+                'photo' => $photoPath,
+                'description' => $this->newPhotoDescriptions[$index],
+                'umkm_id' => $umkm->id,  // Link the photo to the newly created UMKM entry
+            ]);
+        }
+    }
+
+    // Close the modal after storing the data
+    $this->closeModal();
+
+    // Flash success message
+    session()->flash('message', 'UMKM Created Successfully.');
+
+    // Reset the form fields
+    $this->resetFields();
+}
+
+
 
     public function addPhotoField()
     {
@@ -198,3 +257,5 @@ class UmkmCrud extends Component
         $this->newPhotoDescriptions = [];
     }
 }
+
+

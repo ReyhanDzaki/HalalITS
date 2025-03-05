@@ -3,7 +3,6 @@
 @endphp
 
 <div>
-
     <nav class="bg-white fixed w-full z-50 top-0 start-0 border-gray-200 dark:bg-gray-900">
         <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto px-4">
             <a href="/" class="flex items-center space-x-3 rtl:space-x-reverse">
@@ -74,5 +73,6 @@
                 </ul>
             </div>
         </div>
+        <hr>
     </nav>
 </div>

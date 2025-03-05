@@ -62,7 +62,7 @@
               <a href="#"
                   class="text-lg font-semibold md:block hidden lg:visible xl:visible 2xl:visible leading-tight text-gray-900 hover:underline dark:text-white">{{ strlen($umkm->nama_umkm) > 25 ? substr($umkm->nama_umkm, 0, 25) . '...' : $umkm->nama_umkm }}</a>
               <a href="#"
-                  class="text-lg font-semibold visible md:hidden leading-tight text-gray-900 hover:underline dark:text-white">{{ strlen($umkm->nama_umkm) > 10 ? substr($umkm->nama_umkm, 0, 10) . '...' : $umkm->nama_umkm }}</a>
+                  class="text-lg font-semibold visible md:hidden leading-tight whitespace-nowrap text-gray-900 hover:underline dark:text-white">{{ strlen($umkm->nama_umkm) > 10 ? substr($umkm->nama_umkm, 0, 10) . '...' : $umkm->nama_umkm }}</a>
 
               <div class="mt-2 flex items-center gap-2">
                   {{-- <div class="flex items-center">
@@ -397,10 +397,10 @@
                   </li>
               </ul>
 
-              <div class="mt-4 flex items-center justify-between md:gap-3">
+              <div class="mt-4 flex items-center gap-3 justify-between whitespace-nowrap">
                   <p class="text-2xl font-extrabold leading-tight text-gray-900 dark:text-white">{{ $umkm->id }}</p>
                   <a href="{{ route('binaan.detail', $umkm->no_umkm) }}"
-                      class="text-white bg-blue-700 p-[0.3rem] hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm md:px-5 md:py-2.5 md:me-2 md:mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
+                      class="text-white bg-blue-700 p-[0.5rem] hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm md:px-5 md:py-2.5 md:me-2 md:mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
                       <p class=" text-xs">View Details</p>
                   </a>
               </div>

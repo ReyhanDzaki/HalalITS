@@ -5,9 +5,11 @@
                 class="hover:underline">Halal ITS™</a>. All Rights Reserved.
         </span>
         <ul class="flex flex-wrap items-center mt-3 text-sm font-medium text-gray-500 dark:text-gray-400 sm:mt-0">
-            <li>
-                <a href="{{ route('login') }}" class="hover:underline me-4 md:me-6">About</a>
-            </li>
+            @if (!Auth::check())
+                <li>
+                    <a href="{{ route('login') }}" class="hover:underline me-4 md:me-6">Login</a>
+                </li>
+            @endif
             {{-- <li>
             <a href="#" class="hover:underline me-4 md:me-6">Privacy Policy</a>
         </li>

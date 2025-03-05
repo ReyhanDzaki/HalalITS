@@ -18,10 +18,17 @@ class EditUmkm extends Component
     public $nama_umkm;
     public $alamat;
     public $nama_pemilik;
+    public $facebook;
+    public $tokopedia;
+    public $instagram;
+    public $shopee;
     public $nama_produk;
     public $photos = []; // For new photo uploads
     public $photoDescriptions = []; // For photo descriptions
     public $existingPhotos = []; // For displaying existing photos
+       public $latitude;
+    public $longitude;
+
 
     public function mount($no_umkm)
     {
@@ -37,7 +44,12 @@ class EditUmkm extends Component
         $this->alamat = $this->umkms->alamat;
         $this->nama_pemilik = $this->umkms->nama_pemilik;
         $this->nama_produk = $this->umkms->nama_produk;
-
+        $this->facebook = $this->umkms->facebook;
+        $this->instagram = $this->umkms->instagram;
+        $this->tokopedia = $this->umkms->tokopedia;
+        $this->shopee = $this->umkms->shopee;
+        $this->latitude = $this->umkms->latitude ?? -6.200000; // Default to Jakarta
+        $this->longitude = $this->umkms->longitude ?? 106.816666;
         // Load existing photos and descriptions
         $this->existingPhotos = Photo::where('umkm_id', $this->umkms->id)->get();
         $this->photoDescriptions = $this->existingPhotos->pluck('description', 'id')->toArray();
@@ -59,6 +71,8 @@ class EditUmkm extends Component
             'halalCode.*' => 'string|max:255',
             'photos.*' => 'nullable|image|max:1024', // Validate photo uploads
             'photoDescriptions.*' => 'nullable|string|max:255', // Validate photo descriptions
+            'latitude' => 'required|numeric',
+            'longitude' => 'required|numeric',
         ]);
 
         $this->umkms->update([
@@ -68,6 +82,12 @@ class EditUmkm extends Component
             'nama_produk' => $this->nama_produk,
             'sertifikat_halal' => implode(',', $this->halalCode),
             'no_wa' => preg_replace('/^62/', '0', $this->no_wa),
+            'latitude' => $this->latitude,
+            'longitude' => $this->longitude,
+            'facebook' => $this->facebook,
+            'instagram' => $this->instagram,
+            'tokopedia' => $this->tokopedia,
+            'shopee' => $this->shopee,
         ]);
 
         // Handle photo upload and description update

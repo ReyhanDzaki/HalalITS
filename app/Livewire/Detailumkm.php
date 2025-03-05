@@ -11,6 +11,8 @@ class Detailumkm extends Component
     public $umkms;
     public $photos = [];
     public $halalCode;
+    public $pirt;
+    public $bpom;
     public $umkm_id;
 
     public function mount($no_umkm)
@@ -20,6 +22,12 @@ class Detailumkm extends Component
 
         // Split the halal codes
         $this->halalCode = explode(',', $this->umkms->sertifikat_halal);
+
+        // PIRT Halal Code
+        $this->pirt = explode(',', $this->umkms->pirt);
+
+        // BPOM Halal Code
+        $this->bpom = explode(',', $this->umkms->bpom);
 
         // Set the UMKM id for further use
         $this->umkm_id = $this->umkms->id;

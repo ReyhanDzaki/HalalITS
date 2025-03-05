@@ -77,10 +77,7 @@
                             </div>
                         </template>
                     </div>
-
-
                 </div>
-
                 <div class="lg:col-span-2">
                     <h2 class="text-3xl font-semibold ">{{ $umkm->nama_umkm }}</h2>
                     <div class="flex space-x-2 flex-row items-center text-center mt-1">
@@ -139,7 +136,7 @@
 
                     <div class="flex flex-wrap gap-4 mt-8">
                         <a href="https://wa.me/{{ $no_wa }}" type="button"
-                            class="flex flex-row items-center md:min-w-[200px] min-w-full gap-3 cursor-pointer px-4 py-3 bg-yellow-300 hover:bg-yellow-400 text-black text-md font-semibold rounded">
+                            class="flex flex-row items-center min-w-full justify-center gap-3 cursor-pointer px-4 py-3 bg-yellow-300 hover:bg-yellow-400 text-black text-xl font-semibold rounded">
                             <div class="w-10">
                                 <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
@@ -155,8 +152,6 @@
                                 </svg>
                             </div> Kontak Kami!
                         </a>
-                        <button type="button"
-                            class="md:min-w-[200px] min-w-full px-4 py-2.5 border border-yellow-300 bg-transparent text-yellow-300 text-sm font-semibold rounded">Keranjang?</button>
                     </div>
 
                     <div class="mt-8">
@@ -272,8 +267,14 @@
                                         <div id="accordion-nested-collapse-body-2" class="hidden"
                                             aria-labelledby="accordion-nested-collapse-heading-2">
                                             <div class="p-5 border border-b-0 border-gray-200 dark:border-gray-700">
-                                                <p class="text-black dark:text-gray-400">TODO Tombol Modal (newtab?)
-                                                    PDF</p>
+                                                @if (!array_diff($pirt, $placeholders))
+                                                    <p>No PIRT Certificates</p>
+                                                @else
+                                                    @foreach ($pirt as $p)
+                                                        {{ $p }}
+                                                        </a>
+                                                    @endforeach
+                                                @endif
                                             </div>
                                         </div>
                                         <h2 id="accordion-nested-collapse-heading-3">
@@ -294,9 +295,14 @@
                                         <div id="accordion-nested-collapse-body-3" class="hidden"
                                             aria-labelledby="accordion-nested-collapse-heading-3">
                                             <div class="p-5 border border-gray-200 dark:border-gray-700">
-                                                <p class="mb-2 text-black dark:text-gray-400">TODO Tombol Modal
-                                                    (newtab?) PDF
-                                                </p>
+                                                @if (!array_diff($bpom, $placeholders))
+                                                    <p>No BPOM Certificates</p>
+                                                @else
+                                                    @foreach ($bpom as $p)
+                                                        {{ $p }}
+                                                        </a>
+                                                    @endforeach
+                                                @endif
                                                 {{-- <p class="mb-2 text-black dark:text-gray-400">Learn more about these
                                                     technologies:</p>
                                                 <ul class="ps-5 text-black list-disc dark:text-gray-400">
@@ -316,7 +322,79 @@
                         </div>
 
                     </div>
-
+                    @if (
+                        ($umkm->facebook && $umkm->facebook !== '-') ||
+                            ($umkm->instagram && $umkm->instagram !== '-') ||
+                            ($umkm->tokopedia && $umkm->tokopedia !== '-'))
+                        <div class="mt-8 flex justify-center">
+                            <h1 class="text-3xl font-medium">Our Social Media</h1>
+                        </div>
+                        <div class="mt-4 flex justify-center">
+                            @if ($umkm->facebook && $umkm->facebook !== '-')
+                                <a href="{{ Str::startsWith($umkm->facebook, 'http') ? $umkm->facebook : 'https://www.facebook.com/' . ltrim($umkm->facebook, '@') }}"
+                                    target="_blank">
+                                    <span
+                                        class="inline-flex items-center justify-center w-12 h-12 me-2 text-sm font-semibold text-gray-800 bg-gray-100 rounded-full dark:bg-gray-700 dark:text-gray-300">
+                                        <?xml version="1.0" ?>
+                                        {{-- facebook --}}
+                                        <svg class="w-6 h-6">
+                                            <svg version="1.1" viewBox="0 0 512 512" xml:space="preserve"
+                                                xmlns="http://www.w3.org/2000/svg" xmlns:serif="http://www.serif.com/"
+                                                xmlns:xlink="http://www.w3.org/1999/xlink">
+                                                <path
+                                                    d="M374.245,285.825l14.104,-91.961l-88.233,0l0,-59.677c0,-25.159 12.325,-49.682 51.845,-49.682l40.117,0l0,-78.291c0,0 -36.408,-6.214 -71.214,-6.214c-72.67,0 -120.165,44.042 -120.165,123.775l0,70.089l-80.777,0l0,91.961l80.777,0l0,222.31c16.197,2.542 32.798,3.865 49.709,3.865c16.911,0 33.512,-1.323 49.708,-3.865l0,-222.31l74.129,0Z"
+                                                    style="fill-rule:nonzero;" />
+                                            </svg>
+                                    </span>
+                                </a>
+                            @endif
+                            @if ($umkm->instagram && $umkm->instagram !== '-')
+                                <a href="{{ Str::startsWith($umkm->instagram, 'http') ? $umkm->instagram : 'https://www.instagram.com/' . ltrim($umkm->instagram, '@') }}"
+                                    target="_blank">
+                                    <span
+                                        class="inline-flex items-center justify-center w-12 h-12 me-2 text-sm font-semibold text-blue-800 bg-blue-100 rounded-full dark:bg-gray-700 dark:text-blue-400">
+                                        <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true"
+                                            xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none"
+                                            viewBox="0 0 24 24">
+                                            <path fill="currentColor" fill-rule="evenodd"
+                                                d="M3 8a5 5 0 0 1 5-5h8a5 5 0 0 1 5 5v8a5 5 0 0 1-5 5H8a5 5 0 0 1-5-5V8Zm5-3a3 3 0 0 0-3 3v8a3 3 0 0 0 3 3h8a3 3 0 0 0 3-3V8a3 3 0 0 0-3-3H8Zm7.597 2.214a1 1 0 0 1 1-1h.01a1 1 0 1 1 0 2h-.01a1 1 0 0 1-1-1ZM12 9a3 3 0 1 0 0 6 3 3 0 0 0 0-6Zm-5 3a5 5 0 1 1 10 0 5 5 0 0 1-10 0Z"
+                                                clip-rule="evenodd" />
+                                        </svg>
+                                    </span>
+                                </a>
+                            @endif
+                            @if ($umkm->tokopedia && $umkm->tokopedia !== '-')
+                                <a href="{{ Str::startsWith($umkm->tokopedia, 'http') ? $umkm->tokopedia : 'https://www.tokopedia.com/' . ltrim($umkm->tokopedia, '@') }}"
+                                    target="_blank">
+                                    <span
+                                        class="inline-flex items-center justify-center w-12 h-12 me-2 text-sm font-semibold text-gray-800 bg-gray-100 rounded-full dark:bg-gray-700 dark:text-gray-300">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7" viewBox="0 0 192 192"
+                                            fill="none">
+                                            <path fill="#000000" fill-rule="evenodd"
+                                                d="M96 28c-9.504 0-17.78 5.307-22.008 13.127C82.736 42.123 88.89 44 96 47.332c7.11-3.332 13.264-5.209 22.008-6.205C113.781 33.31 105.506 28 96 28Zm0-12c-15.973 0-29.568 10.117-34.754 24.28C52.932 40 42.462 40 28.53 40H28a6 6 0 0 0-6 6v124a6 6 0 0 0 6 6h92c27.614 0 50-22.386 50-50V46a6 6 0 0 0-6-6h-.531c-13.931 0-24.401 0-32.715.28C125.566 26.113 111.97 16 96 16ZM34 52.001V164h86c20.987 0 38-17.013 38-38V52.001c-18.502.009-29.622.098-37.872.966-8.692.915-13.999 2.677-21.445 6.4a6 6 0 0 1-5.366 0c-7.446-3.723-12.753-5.485-21.445-6.4-8.25-.868-19.37-.957-37.872-.966ZM50 96c0-9.941 8.059-18 18-18s18 8.059 18 18-8.059 18-18 18-18-8.059-18-18Zm18-30c-16.569 0-30 13.431-30 30 0 16.569 13.431 30 30 30 1.126 0 2.238-.062 3.332-.183l20.425 20.426a6 6 0 0 0 8.486 0l20.425-20.426c1.094.121 2.206.183 3.332.183 16.569 0 30-13.431 30-30 0-16.569-13.431-30-30-30-12.764 0-23.666 7.971-28 19.207C91.666 73.971 80.764 66 68 66Zm40.082 55.433A30.1 30.1 0 0 1 96 106.793a30.101 30.101 0 0 1-12.082 14.64L96 133.515l12.082-12.082ZM124 78c-9.941 0-18 8.059-18 18s8.059 18 18 18 18-8.059 18-18-8.059-18-18-18ZM76 96a8 8 0 1 1-16 0 8 8 0 0 1 16 0Zm48 8a8 8 0 1 0 0-16 8 8 0 0 0 0 16Z"
+                                                clip-rule="evenodd" />
+                                        </svg>
+                                        <span class="sr-only">Icon description</span>
+                                    </span>
+                                </a>
+                            @endif
+                            @if ($umkm->shopee && $umkm->shopee !== '-')
+                                <a href="{{ Str::startsWith($umkm->shopee, 'http') ? $umkm->shopee : 'https://www.shopee.com/' . ltrim($umkm->shopee, '@') }}"
+                                    target="_blank">
+                                    <span
+                                        class="inline-flex items-center justify-center w-12 h-12 me-2 text-sm font-semibold text-blue-800 bg-blue-100 rounded-full dark:bg-gray-700 dark:text-blue-400">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7" viewBox="0 0 192 192"
+                                            fill="none">
+                                            <path fill="#000000"
+                                                d="m29.004 157.064 5.987-.399-5.987.399ZM22 52v-6a6 6 0 0 0-5.987 6.4L22 52Zm140.996 105.064-5.987-.399 5.987.399ZM170 52l5.987.4A6 6 0 0 0 170 46v6ZM34.991 156.665 27.987 51.601l-11.974.798 7.005 105.064 11.973-.798Zm133.991.798 7.005-105.064-11.974-.798-7.004 105.064 11.973.798Zm-11.973-.798a10 10 0 0 1-9.978 9.335v12c11.582 0 21.181-8.98 21.951-20.537l-11.973-.798Zm-133.991.798C23.788 169.02 33.387 178 44.968 178v-12a10 10 0 0 1-9.977-9.335l-11.973.798ZM74 48c0-12.15 9.85-22 22-22V14c-18.778 0-34 15.222-34 34h12Zm22-22c12.15 0 22 9.85 22 22h12c0-18.778-15.222-34-34-34v12ZM22 58h148V46H22v12Zm22.969 120H147.03v-12H44.969v12Z" />
+                                            <path stroke="#000000" stroke-linecap="round" stroke-width="12"
+                                                d="M114 84H88c-7.732 0-14 6.268-14 14v0c0 7.732 6.268 14 14 14h4m-2 0h14c7.732 0 14 6.268 14 14v0c0 7.732-6.268 14-14 14H78" />
+                                        </svg>
+                                    </span>
+                                </a>
+                            @endif
+                        </div>
+                    @endif
                     <div class="mt-8">
                         <div class="flex items-start mt-8">
                             <img src="https://readymadeui.com/team-2.webp"

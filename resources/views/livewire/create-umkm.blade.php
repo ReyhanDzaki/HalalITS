@@ -7,6 +7,9 @@
                     <input type="text" id="no_umkm" wire:model="no_umkm"
                         class="shadow-sm border rounded w-full py-2 px-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
                         aria-label="No UMKM">
+                    @error('no_umkm')
+                        <span class="text-red-400">{{ $message }}</span>
+                    @enderror
                 </div>
 
                 <div class="mb-4">
@@ -14,6 +17,9 @@
                     <input type="text" id="nama_pemilik" wire:model="nama_pemilik"
                         class="shadow-sm border rounded w-full py-2 px-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
                         aria-label="Nama Pemilik">
+                    @error('nama_pemilik')
+                        <span class="text-red-400">{{ $message }}</span>
+                    @enderror
                 </div>
 
                 <div class="mb-4">
@@ -21,6 +27,9 @@
                     <input type="text" id="nama_umkm" wire:model="nama_umkm"
                         class="shadow-sm border rounded w-full py-2 px-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
                         aria-label="Nama UMKM" required>
+                    @error('nama_umkm')
+                        <span class="text-red-400">{{ $message }}</span>
+                    @enderror
                 </div>
 
                 <div class="mb-4">
@@ -60,10 +69,11 @@
                 </div>
 
                 <div class="mb-4">
-                    <label for="pirt" class="block text-gray-700 text-sm font-bold mb-2">PIRT:</label>
-                    <input type="text" id="pirt" wire:model="pirt"
+                    <label for="sertifikat_halal" class="block text-gray-700 text-sm font-bold mb-2">Sertifikat
+                        Halal:</label>
+                    <input type="text" id="sertifikat_halal" wire:model="sertifikat_halal"
                         class="shadow-sm border rounded w-full py-2 px-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                        aria-label="PIRT">
+                        aria-label="sertifikat_halal">
                 </div>
 
                 <div class="mb-4">
@@ -80,15 +90,9 @@
                         aria-label="Longitude">
                 </div>
 
-                <div class="mb-4">
-                    <label for="plus_code" class="block text-gray-700 text-sm font-bold mb-2">Plus Code:</label>
-                    <input type="text" id="plus_code" wire:model="plus_code"
-                        class="shadow-sm border rounded w-full py-2 px-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                        aria-label="Plus Code">
-                </div>
-                <div>
+                {{-- <div>
                     <button type="button" wire:click="addPhotoField">Add Photo</button>
-                </div>
+                </div> --}}
 
                 @foreach ($newPhotos as $index => $photo)
                     <div>
