@@ -47,6 +47,15 @@ public $search = '';
         return $query;
     }
 
+    public function render()
+    {
+       $umkms = $this->getQuery()->paginate(8);
+
+        return view('livewire.umkm-crud', [
+            'umkms' => $umkms,
+        ])->layout('layouts.app');
+    }
+
     protected $rules = [
         // Existing rules
         'no_umkm' => 'required',
@@ -62,15 +71,6 @@ public $search = '';
         if (!Auth::check() || Auth::user()->name !== 'admin') {
             abort(403, 'Unauthorized action.');
         }
-    }
-
-    public function render()
-    {
-       $umkms = $this->getQuery()->paginate(8);
-
-        return view('livewire.umkm-crud', [
-            'umkms' => $umkms,
-        ])->layout('layouts.app');
     }
 
     public function create()
@@ -192,19 +192,11 @@ public $search = '';
         $this->newPhotoDescriptions = array_values($this->newPhotoDescriptions);
     }
 
-    public function edit($id)
-    {
-        $umkm = Umkm::findOrFail($id);
-        $this->umkm_id = $id;
-        $this->fill($umkm->toArray());
-        $this->openModal();
-    }
-
     public function delete($id)
     {
         Umkm::find($id)->delete();
         session()->flash('message', 'UMKM Deleted Successfully.');
-    }
+    }   
 
     public function openModal()
     {

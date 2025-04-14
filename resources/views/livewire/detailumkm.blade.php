@@ -59,8 +59,9 @@
                         <template x-if="showText">
                             <div class="flex justify-center items-center p-12">
                                 <iframe width="3300" height="470" frameborder="1"
-                                    src = "https://maps.google.com/maps?q={{ $umkm->latitude }},{{ $umkm->longitude }}&hl=es;z=14&amp;output=embed"></iframe>
+                                    src="https://maps.google.com/maps?q={{ $umkm->latitude ?? '-3.1963' }},{{ $umkm->longitude ?? '118.5056' }}&z={{ $this->zoomLevel }}&amp;output=embed"></iframe>
                             </div>
+
                         </template>
                         <template x-if="!showText">
                             <div>
@@ -402,7 +403,7 @@
 
                             <div class="ml-3">
                                 <h4 class="text-sm font-semibold ">{{ $umkm->nama_pemilik }}</h4>
-                                <div class="flex space-x-1 mt-1">
+                                <!-- <div class="flex space-x-1 mt-1">
                                     <svg class="w-4 fill-yellow-300" viewBox="0 0 14 13" fill="none"
                                         xmlns="http://www.w3.org/2000/svg">
                                         <path
@@ -429,7 +430,7 @@
                                             d="M7 0L9.4687 3.60213L13.6574 4.83688L10.9944 8.29787L11.1145 12.6631L7 11.2L2.8855 12.6631L3.00556 8.29787L0.342604 4.83688L4.5313 3.60213L7 0Z" />
                                     </svg>
                                     <p class="text-xs !ml-2 font-semibold "> - {{ $umkm->tipe_binaan }}</p>
-                                </div>
+                                </div> -->
                                 <p class="text-xs mt-4 ">Umkm saya terdaftar sejak {{ $umkm->created_at }}</p>
                             </div>
                         </div>

@@ -36,6 +36,11 @@ class Detailumkm extends Component
         $this->photos = Photo::where('umkm_id', $this->umkm_id)->get();
     }
 
+     public function getZoomLevelProperty()
+     {
+     return ($this->umkms->latitude && $this->umkms->longitude) ? 14 : 4;
+     }
+
     public function render()
     {
         // Convert WhatsApp number

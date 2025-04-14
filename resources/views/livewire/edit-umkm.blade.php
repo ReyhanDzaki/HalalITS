@@ -109,7 +109,7 @@
 
         <h1 class="text-2xl font-medium">Edit Map</h1>
         <!-- Map -->
-        <div x-data="{
+        <div class="z-0" x-data="{
             map: null,
             latitude: @entangle('latitude'),
             longitude: @entangle('longitude'),
