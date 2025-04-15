@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
-    <link rel="stylesheet" href="{{ mix('resources/css/app.css') }}">
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
     <title>Halal ITS</title>
     @livewireStyles
@@ -78,8 +78,8 @@
                         <div class="px-4 mx-auto max-w-screen-xl md:text-center">
                             <h1
                                 class="mb-4 text-4xl font-extrabold tracking-tight leading-none text-gray-900 md:text-5xl lg:text-6xl dark:text-white">
-                                Kami percaya Anda untuk <span
-                                    class="bg-clip-text text-transparent bg-blue-700"> ikut serta
+                                Kami percaya Anda untuk <span class="bg-clip-text text-transparent bg-blue-700"> ikut
+                                    serta
                                     halal!</span></h1>
                             <p
                                 class="mb-8 text-lg font-normal text-gray-500 lg:text-xl sm:px-16 lg:px-48 dark:text-gray-400">
