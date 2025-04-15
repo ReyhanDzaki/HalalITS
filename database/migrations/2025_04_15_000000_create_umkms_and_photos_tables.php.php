@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateTables extends Migration
+class CreateUmkmsAndPhotosTables extends Migration
 {
     public function up()
     {
