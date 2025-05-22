@@ -52,9 +52,13 @@ class User extends Authenticatable
      */
     public function getIsAdminAttribute()
     {
-        // Define the admin email(s)
         $adminEmails = ['admin@mail.com'];
 
         return in_array($this->email, $adminEmails);
+    }
+
+    public function umkmHistories()
+    {
+    return $this->hasMany(UmkmHistory::class);
     }
 }

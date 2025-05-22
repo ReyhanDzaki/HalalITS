@@ -6,10 +6,11 @@ use App\Livewire\Auth\Login;
 use App\Livewire\Detailumkm;
 
 use App\Livewire\SearchUmkm;
+use App\Livewire\ManageUmkms;
 use App\Livewire\Auth\Register;
 use App\Livewire\AssignUmkmUser;
+use App\Livewire\UmkmHistoryList;
 use App\Http\Middleware\CheckAdmin;
-use App\Livewire\ManageUmkms;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Response;
 
@@ -35,3 +36,7 @@ Route::get('/register', Register::class)->name('register');
 Route::get('/logout', [Login::class, 'logout'])->name('logout');
 Route::get('/umkms', UmkmCrud::class)->name('umkms')->middleware(CheckAdmin::class);
 Route::get('/users', ManageUmkms::class)->name('users')->middleware(CheckAdmin::class);
+Route::middleware(['auth'])->group(function () {
+Route::get('/umkm-history', UmkmHistoryList::class)->name('user.umkm-history');
+
+});

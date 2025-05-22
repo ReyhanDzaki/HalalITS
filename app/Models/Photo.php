@@ -10,9 +10,10 @@ class Photo extends Model
 
     // Photo.php
 protected $fillable = [
-    'photo',
+    'photos',
     'description',
-    'umkm_id', // Make sure this is included
+    'umkm_id',
+    'sertifikathalal_id',
 ];
 
 

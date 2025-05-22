@@ -47,6 +47,7 @@
                 <th class="px-4 py-2 border border-gray-300">Nama Pemilik</th>
                 <th class="px-4 py-2 border border-gray-300">No. WA</th>
                 <th class="px-4 py-2 border border-gray-300">Alamat</th>
+                <th class="px-4 py-2 border border-gray-300">Dibuat Oleh</th>
                 <th class="px-4 py-2 border border-gray-300">Actions</th>
             </tr>
         </thead>
@@ -57,6 +58,7 @@
                     <td class="border px-4 py-2">{{ $umkm->nama_pemilik }}</td>
                     <td class="border px-4 py-2">{{ $umkm->no_wa }}</td>
                     <td class="border px-4 py-2">{{ $umkm->alamat }}</td>
+                    <td class="border px-4 py-2">{{ $umkm->created_by }}</td>
                     <td class="border px-4 py-2">
                         <button onclick="window.location.href='/binaan/edit/{{ $umkm->no_umkm }}'"
                             class="bg-green-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded">

@@ -64,18 +64,34 @@
 
                         </template>
                         <template x-if="!showText">
-                            <div>
-                                <h3 class="my-3">Produk dari {{ $umkm->nama_umkm }}</h3>
-                                <div class="grid grid-cols-2">
+                            <div class="mt-6">
+                                <h3 class="text-xl font-semibold mb-4 text-gray-800">Produk dari {{ $umkm->nama_umkm }}
+                                </h3>
+
+                                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
                                     @foreach ($umkm->photos as $photo)
-                                        <div class="flex flex-col gap-3 justify-center items-center">
-                                            <img src="{{ Storage::url($photo->photo) }}"
-                                                alt="UMKM Photo of {{ $photo->description }}" style="max-width: 200px;">
-                                            <p>{{ $photo->description }}</p>
+                                        <div
+                                            class="bg-white rounded-2xl shadow-md overflow-hidden flex flex-col items-center p-4 transition hover:shadow-lg">
+                                            <img src="{{ Str::startsWith($photo->photos, ['http://', 'https://']) ? $photo->photos : asset('storage/' . $photo->photos) }}"
+                                                alt="Photo" class="w-full h-48 object-cover rounded mb-2">
+                                            <p class="mt-3 text-sm text-gray-600 text-center">{{ $photo->description }}
+                                            </p>
+                                            <a class="hover:underline"
+                                                href="https://bpjph.halal.go.id/search/sertifikat?nama_produk=&nama_pelaku_usaha=&no_sertifikat={{ $photo->sertifikathalal_id }}&page=1"
+                                                target="_blank">
+                                                <div class="flex flex-row gap-3 items-center">
+                                                    <img class="w-6 ring-1 rounded-xl ring-purple-600"
+                                                        src="{{ asset('Logo-Halal.png') }}" alt="">
+                                                    <p class="font-medium text-sm text-gray-600">
+                                                        {{ $photo->sertifikathalal_id }}
+                                                    </p>
+                                                </div>
+                                            </a>
                                         </div>
                                     @endforeach
                                 </div>
                             </div>
+
                         </template>
                     </div>
                 </div>
