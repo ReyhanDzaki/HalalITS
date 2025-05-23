@@ -14,7 +14,7 @@ class Detailumkm extends Component
     public $photos = [];
     public $halalCode;
     public $pirt;
-    public $bpom;
+    public $bpom; // Added for BPOM code
     public $umkm_id;
     public $recentUmkmHistory = []; // New property to hold recent history
 
@@ -24,13 +24,13 @@ class Detailumkm extends Component
         $this->umkms = Umkm::where('no_umkm', $no_umkm)->with('photos')->firstOrFail();
 
         // Split the halal codes
-        $this->halalCode = explode(',', $this->umkms->sertifikat_halal);
+        $this->halalCode = $this->umkms->sertifikat_halal ? explode(',', $this->umkms->sertifikat_halal) : [];
 
         // PIRT Halal Code
-        $this->pirt = explode(',', $this->umkms->pirt);
+        $this->pirt = $this->umkms->pirt ? explode(',', $this->umkms->pirt) : [];
 
         // BPOM Halal Code
-        $this->bpom = explode(',', $this->umkms->bpom);
+        $this->bpom = $this->umkms->bpom ? explode(',', $this->umkms->bpom) : []; // Initialize BPOM code
 
         // Set the UMKM id for further use
         $this->umkm_id = $this->umkms->id;
@@ -93,6 +93,9 @@ class Detailumkm extends Component
             'umkm' => $this->umkms,
             'photos' => $this->photos,
             'no_wa' => $no_wa,
+            'halalCode' => $this->halalCode, // Ensure halalCode is passed
+            'pirt' => $this->pirt, // Ensure pirt is passed
+            'bpom' => $this->bpom, // Pass BPOM to the view
             'recentUmkmHistory' => $this->recentUmkmHistory, // Pass to the view
         ])->layout('layouts.app');
     }

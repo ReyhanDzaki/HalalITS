@@ -14,6 +14,7 @@ class EditUmkm extends Component
 
     public $umkms;
     public $halalCode = [];
+    public $pirtCode = []; // Added for PIRT code
     public $no_wa;
     public $nama_umkm;
     public $alamat;
@@ -39,6 +40,8 @@ class EditUmkm extends Component
         }
 
         $this->halalCode = explode(',', $this->umkms->sertifikat_halal);
+        // Initialize pirtCode from the umkms model, handling potential null or empty string
+        $this->pirtCode = $this->umkms->pirt ? explode(',', $this->umkms->pirt) : [];
         $this->no_wa = preg_replace('/^0/', '62', $this->umkms->no_wa);
         $this->nama_umkm = $this->umkms->nama_umkm;
         $this->alamat = $this->umkms->alamat;
@@ -62,6 +65,13 @@ class EditUmkm extends Component
         $this->halalCode = array_values($this->halalCode); // Re-index array
     }
 
+    // New method to remove PIRT code
+    public function removePirtCode($index)
+    {
+        unset($this->pirtCode[$index]);
+        $this->pirtCode = array_values($this->pirtCode); // Re-index array
+    }
+
     public function update()
     {
         try {
@@ -70,7 +80,8 @@ class EditUmkm extends Component
                 'alamat' => 'required|string|max:255',
                 'nama_pemilik' => 'required|string|max:255',
                 'nama_produk' => 'required|string|max:255',
-                'halalCode.*' => 'string|max:255',
+                'halalCode.*' => 'nullable|string|max:255', // Made nullable as it might be empty
+                'pirtCode.*' => 'nullable|string|max:255', // Added validation for PIRT code
                 'photoDescriptions.*' => 'nullable|string|max:255',
                 'photoHalalIds.*' => 'nullable|string|max:255',
                 'latitude' => 'required|numeric',
@@ -82,7 +93,8 @@ class EditUmkm extends Component
                 'alamat' => $this->alamat,
                 'nama_pemilik' => $this->nama_pemilik,
                 'nama_produk' => $this->nama_produk,
-                'sertifikat_halal' => implode(',', $this->halalCode),
+                'sertifikat_halal' => implode(',', array_filter($this->halalCode)), // Filter out empty strings before imploding
+                'pirt' => implode(',', array_filter($this->pirtCode)), // Save PIRT code, filter out empty strings
                 'no_wa' => preg_replace('/^62/', '0', $this->no_wa),
                 'latitude' => $this->latitude,
                 'longitude' => $this->longitude,
@@ -154,6 +166,12 @@ class EditUmkm extends Component
     public function addCode()
     {
         $this->halalCode[] = ''; // Add a new empty string to the halalCode array
+    }
+
+    // New method to add PIRT code field
+    public function addPirtCode()
+    {
+        $this->pirtCode[] = ''; // Add a new empty string to the pirtCode array
     }
 
     public function addPhotoField()

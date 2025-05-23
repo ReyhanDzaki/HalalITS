@@ -95,6 +95,21 @@
                 Code</button>
         </div>
 
+        <div class="mb-4">
+            <label for="pirtCode" class="block text-gray-700">Sertifikat PIRT</label>
+            @foreach ($pirtCode as $index => $code)
+                <div class="flex items-center space-x-2 mb-2">
+                    <input type="text" id="pirtCode{{ $index }}" wire:model="pirtCode.{{ $index }}"
+                        class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+                    <button type="button" wire:click="removePirtCode({{ $index }})"
+                        class="text-red-500">Remove</button>
+                </div>
+            @endforeach
+            <button type="button" wire:click="addPirtCode"
+                class="mt-2 bg-blue-500 text-white px-4 py-2 rounded-md">Add PIRT
+                Code</button>
+        </div>
+
         <h1 class="text-2xl font-medium">Edit Map</h1>
         <div class="z-0" x-data="{
             map: null,
@@ -106,18 +121,18 @@
                     maxZoom: 19,
                     attribution: '&copy; <a href=\'http://www.openstreetmap.org/copyright\'>OpenStreetMap</a>',
                 }).addTo(this.map);
-
+        
                 const marker = L.marker([this.latitude, this.longitude]).addTo(this.map);
-
+        
                 this.map.on('click', (e) => {
                     const lat = e.latlng.lat;
                     const lng = e.latlng.lng;
                     marker.setLatLng([lat, lng]);
-
+        
                     // Update Alpine state
                     this.latitude = lat;
                     this.longitude = lng;
-
+        
                     // Use Livewire's entangle to automatically sync
                     @this.latitude = lat;
                     @this.longitude = lng;

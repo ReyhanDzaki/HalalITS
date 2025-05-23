@@ -5,26 +5,34 @@
               <div class="h-56 flex items-center justify-center w-full">
                   @php
                       $displayPhoto = null;
-                      if ($umkm->photos->isNotEmpty()) {
-                          $firstPhoto = $umkm->photos->first();
-                          $photoSource = $firstPhoto->photos; // This is the 'photos' column in your Photo model
 
+                      // Check if UMKM has any photos associated AND if the first photo's 'photos' attribute is not empty
+if ($umkm->photos->isNotEmpty() && !empty($umkm->photos->first()->photos)) {
+    $firstPhoto = $umkm->photos->first();
+    $photoSource = $firstPhoto->photos; // This is the 'photos' column in your Photo model
+
+    // Determine if it's a URL or a local storage path
                           if (filter_var($photoSource, FILTER_VALIDATE_URL)) {
                               // It's a direct URL
         $displayPhoto = $photoSource;
     } else {
         // Assume it's a file path stored in storage/app/public
-                              if (Storage::disk('public')->exists($photoSource)) {
-                                  $displayPhoto = Storage::disk('public')->url($photoSource);
-                              }
-                          }
-                      }
+                              // This is the part that now uses asset() directly if the path is not a URL
+                              // We also ensure the path isn't empty before trying to use it with asset()
+        if (Storage::disk('public')->exists($photoSource)) {
+            $displayPhoto = asset('storage/' . $photoSource);
+        }
+    }
+}
 
-                      // Prepare SVGs for JavaScript
-                      $svgs = [
-                          '<svg class="w-32 h-32 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M14 7h-4v3a1 1 0 0 1-2 0V7H6a1 1 0 0 0-.997.923l-.917 11.924A2 2 0 0 0 6.08 22h11.84a2 2 0 0 0 1.994-2.153l-.917-11.924A1 1 0 0 0 18 7h-2v3a1 1 0 1 1-2 0V7Zm-2-3a2 2 0 0 0-2 2v1H8V6a4 4 0 0 1 8 0v1h-2V6a2 2 0 0 0-2-2Z" clip-rule="evenodd" /></svg>',
-                          '<svg class="w-32 h-32 text-gray-800 dark:text-white" aria-hidden="true" i zd="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 122.88 122.88"><title>meal-food</title><path d="M61.44,0A61.46,61.46,0,1,1,18,18,61.21,61.21,0,0,1,61.44,0ZM52.55,58.42c2.92-2,4.39-4.61,4.14-10.58V32.49c0-2.14-3.92-2.4-4.11,0l-.15,12.45a1.75,1.75,0,1,1-3.5,0l.15-12.88c0-2.3-3.77-2.53-3.81,0,0,3.58-.15,9.31-.15,12.88a1.52,1.52,0,1,1-3,0l.15-12.79A2.09,2.09,0,0,0,39,30.61c-1.38.88-1.1,2.65-1.16,4.15l-.48,14.69c.07,4.27,1.19,7.74,4.54,9.22a8.37,8.37,0,0,0,2-.52L42.77,89.25a3.76,3.76,0,0,0,3.71,3.86h.46a4.24,4.24,0,0,0,4.17-4.34l-1-29.59a6.61,6.61,0,0,0,2.45-.76Zm18,29.75-.05-26.41c-11.29-6.52-7.69-31.64,3.6-31.5,13.72.16,15.35,28.31,3.55,31.4l.87,26.64c.17,6.13-8,6.7-8-.13ZM99.29,23.59A53.52,53.52,0,1,0,115,61.44,53.36,53.36,0,0,0,99.29,23.59Z"/></svg>',
-                          '<svg class="w-32 h-32 text-gray-800 dark:text-white" aria-hidden="true" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 113.5 122.88" style="enable-background:new 0 0 113.5 122.88" xml:space="preserve"><style type="text/css">.st0{fill-rule:evenodd;clip-rule:evenodd;}</style><g><path class="st0" d="M101.71,56.76h-5.54v16.51h5.55v0.02c1.14,0,2.19-0.49,2.96-1.26l0.14-0.13c0.68-0.75,1.1-1.73,1.1-2.8 l-0.01,0v-0.03h0.01v-8.1h-0.01v-0.02l0.01,0c0-1.15-0.48-2.2-1.24-2.96c-0.76-0.76-1.81-1.24-2.95-1.25v0.01H101.71L101.71,56.76 L101.71,56.76z M31.66,0.61c1.75-1.16,4.08-0.63,5.2,1.17c1.12,1.8,0.61,4.21-1.14,5.37c-3.19,2.11-3.21,3.75-2.23,5.22 c0.84,1.27,2.14,2.66,3.43,4.03c1.79,1.91,3.59,3.82,4.82,6.03c2.93,5.23,2.67,10.43-6.55,15.59c-1.82,1.02-4.11,0.33-5.1-1.55 c-0.99-1.88-0.32-4.24,1.5-5.26c3.85-2.15,4.34-3.66,3.63-4.92c-0.74-1.31-2.22-2.89-3.7-4.47c-1.53-1.63-3.07-3.27-4.26-5.07 C23.83,11.54,23.21,6.2,31.66,0.61L31.66,0.61z M74.07,0.61c1.75-1.16,4.08-0.63,5.2,1.17c1.12,1.8,0.61,4.21-1.14,5.37 c-3.19,2.11-3.2,3.75-2.23,5.22c0.84,1.27,2.14,2.66,3.43,4.03c1.79,1.91,3.59,3.82,4.82,6.03c2.93,5.23,2.68,10.43-6.54,15.59 c-1.82,1.02-4.11,0.33-5.1-1.55c-0.99-1.88-0.32-4.24,1.5-5.26c3.85-2.15,4.33-3.65,3.62-4.92c-0.74-1.31-2.22-2.89-3.7-4.47 c-1.53-1.63-3.07-3.27-4.26-5.07C66.24,11.53,65.61,6.2,74.07,0.61L74.07,0.61z M52.87,0.61c1.75-1.16,4.08-0.63,5.2,1.17 c1.12,1.8,0.61,4.21-1.14,5.37c-3.19,2.11-3.21,3.75-2.23,5.22c0.84,1.27,2.14,2.66,3.43,4.03c1.79,1.91,3.59,3.82,4.82,6.03 c2.93,5.23,2.68,10.43-6.54,15.59c-1.82,1.02-4.11,0.33-5.1-1.55c-0.99-1.88-0.32-4.24,1.5-5.26c3.85-2.15,4.33-3.66,3.62-4.92 c-0.74-1.31-2.22-2.89-3.7-4.47c-1.53-1.63-3.08-3.27-4.26-5.07C45.03,11.54,44.42,6.2,52.87,0.61L52.87,0.61z M1.42,112.34h36.12 c-12.25-6.13-20.72-18.8-20.72-33.37V48.92h74.58v0.39c0.32-0.09,0.66-0.13,1.01-0.13l9.35,0v0.02h0.02 c3.22,0.01,6.14,1.32,8.26,3.44c2.13,2.12,3.46,5.07,3.47,8.31l0.01,0v0.02h-0.01v7.96l0,0.14h0.01v0.03h-0.01v0.02 c-0.01,3.08-1.22,5.9-3.18,7.99c-0.08,0.1-0.17,0.19-0.26,0.28c-2.12,2.12-5.07,3.44-8.32,3.45v0.02l-9.34,0 c-0.36,0-0.72-0.06-1.05-0.15c-0.63,13.84-8.9,25.77-20.67,31.65h38.15c0.78,0,1.42,0.76,1.42,1.7v7.15c0,0.94-0.64,1.69-1.42,1.69 l-107.4,0c-0.78,0-1.42-0.76-1.42-1.69v-7.15C0,113.1,0.64,112.34,1.42,112.34L1.42,112.34L1.42,112.34z"/></g></svg>',
+// Prepare SVGs for JavaScript (Good practice to define them once)
+$svgs = [
+    // Shopping Bag SVG
+    '<svg class="w-32 h-32 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M14 7h-4v3a1 1 0 0 1-2 0V7H6a1 1 0 0 0-.997.923l-.917 11.924A2 2 0 0 0 6.08 22h11.84a2 2 0 0 0 1.994-2.153l-.917-11.924A1 1 0 0 0 18 7h-2v3a1 1 0 1 1-2 0V7Zm-2-3a2 2 0 0 0-2 2v1H8V6a4 4 0 0 1 8 0v1h-2V6a2 2 0 0 0-2-2Z" clip-rule="evenodd" /></svg>',
+    // Meal/Food SVG
+    '<svg class="w-32 h-32 text-gray-800 dark:text-white" aria-hidden="true" i zd="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 122.88 122.88"><title>meal-food</title><path d="M61.44,0A61.46,61.46,0,1,1,18,18,61.21,61.21,0,0,1,61.44,0ZM52.55,58.42c2.92-2,4.39-4.61,4.14-10.58V32.49c0-2.14-3.92-2.4-4.11,0l-.15,12.45a1.75,1.75,0,1,1-3.5,0l.15-12.88c0-2.3-3.77-2.53-3.81,0,0,3.58-.15,9.31-.15,12.88a1.52,1.52,0,1,1-3,0l.15-12.79A2.09,2.09,0,0,0,39,30.61c-1.38.88-1.1,2.65-1.16,4.15l-.48,14.69c.07,4.27,1.19,7.74,4.54,9.22a8.37,8.37,0,0,0,2-.52L42.77,89.25a3.76,3.76,0,0,0,3.71,3.86h.46a4.24,4.24,0,0,0,4.17-4.34l-1-29.59a6.61,6.61,0,0,0,2.45-.76Zm18,29.75-.05-26.41c-11.29-6.52-7.69-31.64,3.6-31.5,13.72.16,15.35,28.31,3.55,31.4l.87,26.64c.17,6.13-8,6.7-8-.13ZM99.29,23.59A53.52,53.52,0,1,0,115,61.44,53.36,53.36,0,0,0,99.29,23.59Z"/></svg>',
+    // Store/Building SVG
+    '<svg class="w-32 h-32 text-gray-800 dark:text-white" aria-hidden="true" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 113.5 122.88" style="enable-background:new 0 0 113.5 122.88" xml:space="preserve"><style type="text/css">.st0{fill-rule:evenodd;clip-rule:evenodd;}</style><g><path class="st0" d="M101.71,56.76h-5.54v16.51h5.55v0.02c1.14,0,2.19-0.49,2.96-1.26l0.14-0.13c0.68-0.75,1.1-1.73,1.1-2.8 l-0.01,0v-0.03h0.01v-8.1h-0.01v-0.02l0.01,0c0-1.15-0.48-2.2-1.24-2.96c-0.76-0.76-1.81-1.24-2.95-1.25v0.01H101.71L101.71,56.76 L101.71,56.76z M31.66,0.61c1.75-1.16,4.08-0.63,5.2,1.17c1.12,1.8,0.61,4.21-1.14,5.37c-3.19,2.11-3.21,3.75-2.23,5.22 c0.84,1.27,2.14,2.66,3.43,4.03c1.79,1.91,3.59,3.82,4.82,6.03c2.93,5.23,2.67,10.43-6.55,15.59c-1.82,1.02-4.11,0.33-5.1-1.55 c-0.99-1.88-0.32-4.24,1.5-5.26c3.85-2.15,4.34-3.66,3.63-4.92c-0.74-1.31-2.22-2.89-3.7-4.47c-1.53-1.63-3.07-3.27-4.26-5.07 C23.83,11.54,23.21,6.2,31.66,0.61L31.66,0.61z M74.07,0.61c1.75-1.16,4.08-0.63,5.2,1.17c1.12,1.8,0.61,4.21-1.14,5.37 c-3.19,2.11-3.2,3.75-2.23,5.22c0.84,1.27,2.14,2.66,3.43,4.03c1.79,1.91,3.59,3.82,4.82,6.03c2.93,5.23,2.68,10.43-6.54,15.59 c-1.82,1.02-4.11,0.33-5.1-1.55c-0.99-1.88-0.32-4.24,1.5-5.26c3.85-2.15,4.33-3.65,3.62-4.92c-0.74-1.31-2.22-2.89-3.7-4.47 c-1.53-1.63-3.07-3.27-4.26-5.07C66.24,11.53,65.61,6.2,74.07,0.61L74.07,0.61z M52.87,0.61c1.75-1.16,4.08-0.63,5.2,1.17 c1.12,1.8,0.61,4.21-1.14,5.37c-3.19,2.11-3.21,3.75-2.23,5.22c0.84,1.27,2.14,2.66,3.43,4.03c1.79,1.91,3.59,3.82,4.82,6.03 c2.93,5.23,2.68,10.43-6.54,15.59c-1.82,1.02-4.11,0.33-5.1-1.55c-0.99-1.88-0.32-4.24,1.5-5.26c3.85-2.15,4.33-3.66,3.62-4.92 c-0.74-1.31-2.22-2.89-3.7-4.47c-1.53-1.63-3.08-3.27-4.26-5.07C45.03,11.54,44.42,6.2,52.87,0.61L52.87,0.61z M1.42,112.34h36.12 c-12.25-6.13-20.72-18.8-20.72-33.37V48.92h74.58v0.39c0.32-0.09,0.66-0.13,1.01-0.13l9.35,0v0.02h0.02 c3.22,0.01,6.14,1.32,8.26,3.44c2.13,2.12,3.46,5.07,3.47,8.31l0.01,0v0.02h-0.01v7.96l0,0.14h0.01v0.03h-0.01v0.02 c-0.01,3.08-1.22,5.9-3.18,7.99c-0.08,0.1-0.17,0.19-0.26,0.28c-2.12,2.12-5.07,3.44-8.32,3.45v0.02l-9.34,0 c-0.36,0-0.72-0.06-1.05-0.15c-0.63,13.84-8.9,25.77-20.67,31.65h38.15c0.78,0,1.42,0.76,1.42,1.7v7.15c0,0.94-0.64,1.69-1.42,1.69 l-107.4,0c-0.78,0-1.42-0.76-1.42-1.69v-7.15C0,113.1,0.64,112.34,1.42,112.34L1.42,112.34L1.42,112.34z"/></g></svg>',
                       ];
                   @endphp
 
@@ -45,7 +53,8 @@
 
           <script>
               function getFallbackSvg() {
-                  const svgs = @json($svgs); // Pass PHP array to JavaScript
+                  // Ensure svgs is passed as a JSON string from PHP to JavaScript
+                  const svgs = @json($svgs);
                   const randomIndex = Math.floor(Math.random() * svgs.length);
                   return svgs[randomIndex];
               }
@@ -54,14 +63,44 @@
               <div class="mb-4 flex items-center justify-between gap-4">
                   <div
                       class="me-2 flex flex-row gap-2 rounded bg-primary-100 px-2.5 py-0.5 text-xs font-medium text-primary-800 dark:bg-primary-900 dark:text-primary-300">
-                      <img class="w-4"
-                          src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1c/Halal_Indonesia.svg/670px-Halal_Indonesia.svg.png?20220822124151"
-                          alt="">
-                      <img class="w-6"
-                          src="https://sibakuljogja.jogjaprov.go.id/blog/kukm/wp-content/uploads/sites/111/2023/09/pirt.png"
-                          alt="">
-                  </div>
+                      @php
+                          // Helper function to check if an array of codes is effectively empty (contains only placeholders)
+                          $isEffectivelyEmpty = function ($codesArray) {
+                              if (!is_array($codesArray)) {
+                                  return true; // Not an array, consider it empty
+                              }
+                              $filteredCodes = array_filter($codesArray, function ($item) {
+                                  $item = trim(strtolower($item));
+                                  return !empty($item) && $item !== 'null' && $item !== 'n/a' && $item !== '-';
+                              });
+                              return empty($filteredCodes);
+                          };
 
+                          // Halal image shows if there is ANY photo for the UMKM
+                          // This relies on $photos being a Laravel Collection loaded from the UMKM model.
+                          $showHalalImage = isset($photos) && $photos->isNotEmpty();
+
+                          // PIRT logic remains the same (shows if PIRT codes exist in UMKM data)
+                          $hasPirtCode = !$isEffectivelyEmpty($pirt ?? []);
+                      @endphp
+
+                      @if ($showHalalImage)
+                          <img class="w-4"
+                              src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1c/Halal_Indonesia.svg/670px-Halal_Indonesia.svg.png?20220822124151"
+                              alt="Sertifikat Halal">
+                      @endif
+
+                      @if ($hasPirtCode)
+                          <img class="w-6"
+                              src="https://sibakuljogja.jogjaprov.go.id/blog/kukm/wp-content/uploads/sites/111/2023/09/pirt.png"
+                              alt="Sertifikat PIRT">
+                      @endif
+
+                      {{-- If neither the Halal image nor the PIRT image are shown, display "No Certificates" --}}
+                      @if (!$showHalalImage && !$hasPirtCode)
+                          <p class="text-gray-600 dark:text-gray-400">No Certificates</p>
+                      @endif
+                  </div>
 
                   {{-- <div class="flex items-center justify-end gap-1">
                       <button type="button" data-tooltip-target="tooltip-quick-look"

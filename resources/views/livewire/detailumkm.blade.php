@@ -284,13 +284,42 @@
                                         <div id="accordion-nested-collapse-body-2" class="hidden"
                                             aria-labelledby="accordion-nested-collapse-heading-2">
                                             <div class="p-5 border border-b-0 border-gray-200 dark:border-gray-700">
-                                                @if (!array_diff($pirt, $placeholders))
-                                                    <p>No PIRT Certificates</p>
+                                                <h3 class="font-semibold text-gray-800 dark:text-gray-200 mb-2">
+                                                    Sertifikat PIRT:</h3>
+                                                @php
+                                                    // Filter out empty strings and common placeholders like "null" or "N/A"
+                                                    $filteredPirt = array_filter($pirt, function ($item) {
+                                                        $item = trim(strtolower($item));
+                                                        return !empty($item) &&
+                                                            $item !== 'null' &&
+                                                            $item !== 'n/a' &&
+                                                            $item !== '-';
+                                                    });
+                                                @endphp
+
+                                                @if (empty($filteredPirt))
+                                                    <p class="text-gray-600 dark:text-gray-400">Tidak ada Sertifikat
+                                                        PIRT</p>
                                                 @else
-                                                    @foreach ($pirt as $p)
-                                                        {{ $p }}
-                                                        </a>
-                                                    @endforeach
+                                                    <ul class="list-disc pl-5">
+                                                        @foreach ($filteredPirt as $pirtCodeValue)
+                                                            <li class="mb-1 text-gray-700 dark:text-gray-300">
+                                                                <a href="https://sppirt.pom.go.id/cek-sppirt"
+                                                                    target="_blank" rel="noopener noreferrer"
+                                                                    class="text-blue-600 hover:underline dark:text-blue-400">
+                                                                    {{ $pirtCodeValue }}
+                                                                </a>
+                                                                <span
+                                                                    class="text-gray-500 dark:text-gray-400 ml-2">(Klik
+                                                                    untuk cek, masukkan kode secara manual)</span>
+                                                            </li>
+                                                        @endforeach
+                                                    </ul>
+                                                    <p class="text-sm text-red-600 dark:text-red-400 mt-2">
+                                                        **Peringatan:** Situs SPPIRT POM membutuhkan verifikasi CAPTCHA.
+                                                        Harap masukkan kode PIRT secara manual ke kolom pencarian
+                                                        setelah mengklik tautan.
+                                                    </p>
                                                 @endif
                                             </div>
                                         </div>
@@ -451,9 +480,10 @@
                             </div>
                         </div>
                         <ul class="flex my-2 md:my-6 flex-row justify-between">
-                            <a href="{{ route('binaan.list') }}"
-                                class=" font-semibold text-sm text-white bg-gray-800 py-3 px-8 border-b-2 border-yellow-300 cursor-pointer transition-all">
-                                Kembali</a>
+                            <a href="{{ url()->previous() }}"
+                                class="font-semibold text-sm text-white bg-gray-800 py-3 px-8 border-b-2 border-yellow-300 cursor-pointer transition-all">
+                                Kembali
+                            </a>
                             @if (Auth::check() && (Auth::id() === $umkm->user_id || Auth::user()->is_admin))
                                 <a href="{{ route('binaan.edit', $umkm->no_umkm) }}"
                                     class="font-semibold text-sm text-white bg-gray-800 py-3 px-8 border-b-2 border-yellow-300 cursor-pointer transition-all">
