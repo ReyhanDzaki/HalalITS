@@ -17,6 +17,7 @@ class Card extends Component
 
     public function render()
     {
+        $umkms = Umkm::with('photos')->get(); // Or a specific query like ->where('no_umkm', $someNoUmkm)->first()
         return view('livewire.card');
     }
 }

@@ -13,7 +13,7 @@ class UmkmHistoryList extends Component
 
     public $perPage = 10; // Number of history items per page
 
-    /**
+    /**`
      * Renders the component.
      *
      * @return \Illuminate\View\View
