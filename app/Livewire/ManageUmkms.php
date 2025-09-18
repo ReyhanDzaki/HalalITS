@@ -42,8 +42,6 @@ class ManageUmkms extends Component
         $this->umkms = $this->queryUmkms(); // Refresh the list
     }
 
-
-
     private function queryUmkms()
     {
         $query = Umkm::query();

@@ -239,30 +239,44 @@
                                         </h2>
                                         <div id="accordion-nested-collapse-body-1" class="hidden"
                                             aria-labelledby="accordion-nested-collapse-heading-1">
-                                            <div
-                                                class="p-5 border border-b-0 border-gray-200 dark:border-gray-700 flex gap-2 flex-col">
+                                            <div class="p-5 border border-b-0 border-gray-200 dark:border-gray-700">
+                                                <h3 class="font-semibold text-gray-800 dark:text-gray-200 mb-2">
+                                                    Sertifikat Halal:</h3>
                                                 @php
-                                                    // Define placeholders if applicable
-                                                    $placeholders = ['-', 'N/A', 'None', null]; // Adjust based on expected placeholder values
+                                                    // Filter out empty strings and common placeholders
+                                                    $filteredHalalCode = array_filter($halalCode, function ($item) {
+                                                        $item = trim(strtolower($item));
+                                                        return !empty($item) &&
+                                                            $item !== 'null' &&
+                                                            $item !== 'n/a' &&
+                                                            $item !== '-';
+                                                    });
                                                 @endphp
 
-                                                @if (!array_diff($halalCode, $placeholders))
-                                                    <p>No Halal Certificates</p>
+                                                @if (empty($filteredHalalCode))
+                                                    <p class="text-gray-600 dark:text-gray-400">Tidak ada Sertifikat
+                                                        Halal</p>
                                                 @else
-                                                    @foreach ($halalCode as $code)
-                                                        <a class="hover:underline"
-                                                            href="https://bpjph.halal.go.id/search/sertifikat?nama_produk=&nama_pelaku_usaha=&no_sertifikat={{ $code }}&page=1"
-                                                            target="_blank">
-                                                            <div class="flex flex-row gap-3 items-center">
-                                                                <img class="w-6 ring-1 rounded-xl ring-purple-600"
-                                                                    src="{{ asset('Logo-Halal.png') }}"
-                                                                    alt="">
-                                                                <p class="font-medium">
-                                                                    {{ $code }}
-                                                                </p>
-                                                            </div>
-                                                        </a>
-                                                    @endforeach
+                                                    <ul class="list-disc pl-5">
+                                                        @foreach ($filteredHalalCode as $code)
+                                                            <li class="mb-1 text-gray-700 dark:text-gray-300">
+                                                                <a class="text-blue-600 hover:underline dark:text-blue-400 flex flex-row gap-3 items-center"
+                                                                    href="https://bpjph.halal.go.id/search/sertifikat?nama_produk=&nama_pelaku_usaha=&no_sertifikat={{ $code }}&page=1"
+                                                                    target="_blank" rel="noopener noreferrer">
+                                                                    {{-- Keep your Halal logo here as it's specific to the certificate type --}}
+                                                                    <img class="w-6 ring-1 rounded-xl ring-purple-600"
+                                                                        src="{{ asset('Logo-Halal.png') }}"
+                                                                        alt="Logo Halal">
+                                                                    <p class="font-medium">
+                                                                        {{ $code }}
+                                                                    </p>
+                                                                </a>
+                                                                <span
+                                                                    class="text-gray-500 dark:text-gray-400 ml-2">(Klik
+                                                                    untuk cek)</span>
+                                                            </li>
+                                                        @endforeach
+                                                    </ul>
                                                 @endif
                                             </div>
                                         </div>
@@ -341,7 +355,7 @@
                                         <div id="accordion-nested-collapse-body-3" class="hidden"
                                             aria-labelledby="accordion-nested-collapse-heading-3">
                                             <div class="p-5 border border-gray-200 dark:border-gray-700">
-                                                @if (!array_diff($bpom, $placeholders))
+                                                @if (!array_diff($bpom))
                                                     <p>No BPOM Certificates</p>
                                                 @else
                                                     @foreach ($bpom as $p)

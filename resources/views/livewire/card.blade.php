@@ -1,24 +1,24 @@
-      <div
-          class="rounded-lg border border-blue-200 bg-gradient-to-br from-blue-100 to-gray-100 p-6 grid grid-cols-1 shadow-sm dark:border-gray-700 dark:bg-gray-800">
-          <div
-              class="rounded-lg border border-blue-200 bg-gradient-to-br from-blue-100 to-gray-100 p-6 grid grid-cols-1 shadow-sm dark:border-gray-700 dark:bg-gray-800">
-              <div class="h-56 flex items-center justify-center w-full">
-                  @php
-                      $displayPhoto = null;
+<div
+    class="rounded-lg border border-blue-200 bg-gradient-to-br from-blue-100 to-gray-100 p-4 sm:p-6 grid grid-cols-1 shadow-sm dark:border-gray-700 dark:bg-gray-800">
+    <div
+        class="rounded-lg border border-blue-200 bg-gradient-to-br from-blue-100 to-gray-100 p-4 sm:p-6 grid grid-cols-1 shadow-sm dark:border-gray-700 dark:bg-gray-800">
+        <div class="h-48 sm:h-56 flex items-center justify-center w-full">
+            @php
+                $displayPhoto = null;
 
-                      // Check if UMKM has any photos associated AND if the first photo's 'photos' attribute is not empty
+                // Check if UMKM has any photos associated AND if the first photo's 'photos' attribute is not empty
 if ($umkm->photos->isNotEmpty() && !empty($umkm->photos->first()->photos)) {
     $firstPhoto = $umkm->photos->first();
     $photoSource = $firstPhoto->photos; // This is the 'photos' column in your Photo model
 
     // Determine if it's a URL or a local storage path
-                          if (filter_var($photoSource, FILTER_VALIDATE_URL)) {
-                              // It's a direct URL
+                    if (filter_var($photoSource, FILTER_VALIDATE_URL)) {
+                        // It's a direct URL
         $displayPhoto = $photoSource;
     } else {
         // Assume it's a file path stored in storage/app/public
-                              // This is the part that now uses asset() directly if the path is not a URL
-                              // We also ensure the path isn't empty before trying to use it with asset()
+                        // This is the part that now uses asset() directly if the path is not a URL
+                        // We also ensure the path isn't empty before trying to use it with asset()
         if (Storage::disk('public')->exists($photoSource)) {
             $displayPhoto = asset('storage/' . $photoSource);
         }
@@ -33,76 +33,75 @@ $svgs = [
     '<svg class="w-32 h-32 text-gray-800 dark:text-white" aria-hidden="true" i zd="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 122.88 122.88"><title>meal-food</title><path d="M61.44,0A61.46,61.46,0,1,1,18,18,61.21,61.21,0,0,1,61.44,0ZM52.55,58.42c2.92-2,4.39-4.61,4.14-10.58V32.49c0-2.14-3.92-2.4-4.11,0l-.15,12.45a1.75,1.75,0,1,1-3.5,0l.15-12.88c0-2.3-3.77-2.53-3.81,0,0,3.58-.15,9.31-.15,12.88a1.52,1.52,0,1,1-3,0l.15-12.79A2.09,2.09,0,0,0,39,30.61c-1.38.88-1.1,2.65-1.16,4.15l-.48,14.69c.07,4.27,1.19,7.74,4.54,9.22a8.37,8.37,0,0,0,2-.52L42.77,89.25a3.76,3.76,0,0,0,3.71,3.86h.46a4.24,4.24,0,0,0,4.17-4.34l-1-29.59a6.61,6.61,0,0,0,2.45-.76Zm18,29.75-.05-26.41c-11.29-6.52-7.69-31.64,3.6-31.5,13.72.16,15.35,28.31,3.55,31.4l.87,26.64c.17,6.13-8,6.7-8-.13ZM99.29,23.59A53.52,53.52,0,1,0,115,61.44,53.36,53.36,0,0,0,99.29,23.59Z"/></svg>',
     // Store/Building SVG
     '<svg class="w-32 h-32 text-gray-800 dark:text-white" aria-hidden="true" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 113.5 122.88" style="enable-background:new 0 0 113.5 122.88" xml:space="preserve"><style type="text/css">.st0{fill-rule:evenodd;clip-rule:evenodd;}</style><g><path class="st0" d="M101.71,56.76h-5.54v16.51h5.55v0.02c1.14,0,2.19-0.49,2.96-1.26l0.14-0.13c0.68-0.75,1.1-1.73,1.1-2.8 l-0.01,0v-0.03h0.01v-8.1h-0.01v-0.02l0.01,0c0-1.15-0.48-2.2-1.24-2.96c-0.76-0.76-1.81-1.24-2.95-1.25v0.01H101.71L101.71,56.76 L101.71,56.76z M31.66,0.61c1.75-1.16,4.08-0.63,5.2,1.17c1.12,1.8,0.61,4.21-1.14,5.37c-3.19,2.11-3.21,3.75-2.23,5.22 c0.84,1.27,2.14,2.66,3.43,4.03c1.79,1.91,3.59,3.82,4.82,6.03c2.93,5.23,2.67,10.43-6.55,15.59c-1.82,1.02-4.11,0.33-5.1-1.55 c-0.99-1.88-0.32-4.24,1.5-5.26c3.85-2.15,4.34-3.66,3.63-4.92c-0.74-1.31-2.22-2.89-3.7-4.47c-1.53-1.63-3.07-3.27-4.26-5.07 C23.83,11.54,23.21,6.2,31.66,0.61L31.66,0.61z M74.07,0.61c1.75-1.16,4.08-0.63,5.2,1.17c1.12,1.8,0.61,4.21-1.14,5.37 c-3.19,2.11-3.2,3.75-2.23,5.22c0.84,1.27,2.14,2.66,3.43,4.03c1.79,1.91,3.59,3.82,4.82,6.03c2.93,5.23,2.68,10.43-6.54,15.59 c-1.82,1.02-4.11,0.33-5.1-1.55c-0.99-1.88-0.32-4.24,1.5-5.26c3.85-2.15,4.33-3.65,3.62-4.92c-0.74-1.31-2.22-2.89-3.7-4.47 c-1.53-1.63-3.07-3.27-4.26-5.07C66.24,11.53,65.61,6.2,74.07,0.61L74.07,0.61z M52.87,0.61c1.75-1.16,4.08-0.63,5.2,1.17 c1.12,1.8,0.61,4.21-1.14,5.37c-3.19,2.11-3.21,3.75-2.23,5.22c0.84,1.27,2.14,2.66,3.43,4.03c1.79,1.91,3.59,3.82,4.82,6.03 c2.93,5.23,2.68,10.43-6.54,15.59c-1.82,1.02-4.11,0.33-5.1-1.55c-0.99-1.88-0.32-4.24,1.5-5.26c3.85-2.15,4.33-3.66,3.62-4.92 c-0.74-1.31-2.22-2.89-3.7-4.47c-1.53-1.63-3.08-3.27-4.26-5.07C45.03,11.54,44.42,6.2,52.87,0.61L52.87,0.61z M1.42,112.34h36.12 c-12.25-6.13-20.72-18.8-20.72-33.37V48.92h74.58v0.39c0.32-0.09,0.66-0.13,1.01-0.13l9.35,0v0.02h0.02 c3.22,0.01,6.14,1.32,8.26,3.44c2.13,2.12,3.46,5.07,3.47,8.31l0.01,0v0.02h-0.01v7.96l0,0.14h0.01v0.03h-0.01v0.02 c-0.01,3.08-1.22,5.9-3.18,7.99c-0.08,0.1-0.17,0.19-0.26,0.28c-2.12,2.12-5.07,3.44-8.32,3.45v0.02l-9.34,0 c-0.36,0-0.72-0.06-1.05-0.15c-0.63,13.84-8.9,25.77-20.67,31.65h38.15c0.78,0,1.42,0.76,1.42,1.7v7.15c0,0.94-0.64,1.69-1.42,1.69 l-107.4,0c-0.78,0-1.42-0.76-1.42-1.69v-7.15C0,113.1,0.64,112.34,1.42,112.34L1.42,112.34L1.42,112.34z"/></g></svg>',
-                      ];
-                  @endphp
+                ];
+            @endphp
 
-                  @if ($displayPhoto)
-                      <img src="{{ $displayPhoto }}" alt="{{ $firstPhoto->description ?? 'UMKM Photo' }}"
-                          class="max-h-full max-w-full object-contain rounded-lg"
-                          onerror="this.outerHTML = getFallbackSvg();">
-                  @else
-                      {{-- Your existing SVG randomizer logic --}}
-                      @php
-                          $randomIndex = array_rand($svgs);
-                          $selectedSvg = $svgs[$randomIndex];
-                      @endphp
-                      {!! $selectedSvg !!}
-                  @endif
-              </div>
-          </div>
+            @if ($displayPhoto)
+                <img src="{{ $displayPhoto }}" alt="{{ $firstPhoto->description ?? 'UMKM Photo' }}"
+                    class="max-h-full max-w-full object-contain rounded-lg" onerror="this.outerHTML = getFallbackSvg();">
+            @else
+                {{-- Your existing SVG randomizer logic --}}
+                @php
+                    $randomIndex = array_rand($svgs);
+                    $selectedSvg = $svgs[$randomIndex];
+                @endphp
+                {!! $selectedSvg !!}
+            @endif
+        </div>
+    </div>
 
-          <script>
-              function getFallbackSvg() {
-                  // Ensure svgs is passed as a JSON string from PHP to JavaScript
-                  const svgs = @json($svgs);
-                  const randomIndex = Math.floor(Math.random() * svgs.length);
-                  return svgs[randomIndex];
-              }
-          </script>
-          <div class="pt-6">
-              <div class="mb-4 flex items-center justify-between gap-4">
-                  <div
-                      class="me-2 flex flex-row gap-2 rounded bg-primary-100 px-2.5 py-0.5 text-xs font-medium text-primary-800 dark:bg-primary-900 dark:text-primary-300">
-                      @php
-                          // Helper function to check if an array of codes is effectively empty (contains only placeholders)
-                          $isEffectivelyEmpty = function ($codesArray) {
-                              if (!is_array($codesArray)) {
-                                  return true; // Not an array, consider it empty
-                              }
-                              $filteredCodes = array_filter($codesArray, function ($item) {
-                                  $item = trim(strtolower($item));
-                                  return !empty($item) && $item !== 'null' && $item !== 'n/a' && $item !== '-';
-                              });
-                              return empty($filteredCodes);
-                          };
+    <script>
+        function getFallbackSvg() {
+            // Ensure svgs is passed as a JSON string from PHP to JavaScript
+            const svgs = @json($svgs);
+            const randomIndex = Math.floor(Math.random() * svgs.length);
+            return svgs[randomIndex];
+        }
+    </script>
+    <div class="pt-6">
+        <div class="mb-4 flex items-center justify-between gap-4">
+            <div
+                class="me-2 flex flex-row gap-2 rounded bg-primary-100 px-2.5 py-0.5 text-xs font-medium text-primary-800 dark:bg-primary-900 dark:text-primary-300">
+                @php
+                    // Helper function to check if an array of codes is effectively empty (contains only placeholders)
+                    $isEffectivelyEmpty = function ($codesArray) {
+                        if (!is_array($codesArray)) {
+                            return true; // Not an array, consider it empty
+                        }
+                        $filteredCodes = array_filter($codesArray, function ($item) {
+                            $item = trim(strtolower($item));
+                            return !empty($item) && $item !== 'null' && $item !== 'n/a' && $item !== '-';
+                        });
+                        return empty($filteredCodes);
+                    };
 
-                          // Halal image shows if there is ANY photo for the UMKM
-                          // This relies on $photos being a Laravel Collection loaded from the UMKM model.
-                          $showHalalImage = isset($photos) && $photos->isNotEmpty();
+                    // Halal image shows if there is ANY photo for the UMKM
+                    // This relies on $photos being a Laravel Collection loaded from the UMKM model.
+                    $showHalalImage = isset($photos) && $photos->isNotEmpty();
 
-                          // PIRT logic remains the same (shows if PIRT codes exist in UMKM data)
-                          $hasPirtCode = !$isEffectivelyEmpty($pirt ?? []);
-                      @endphp
+                    // PIRT logic remains the same (shows if PIRT codes exist in UMKM data)
+                    $hasPirtCode = !$isEffectivelyEmpty($pirt ?? []);
+                @endphp
 
-                      @if ($showHalalImage)
-                          <img class="w-4"
-                              src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1c/Halal_Indonesia.svg/670px-Halal_Indonesia.svg.png?20220822124151"
-                              alt="Sertifikat Halal">
-                      @endif
+                @if ($showHalalImage)
+                    <img class="w-4"
+                        src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1c/Halal_Indonesia.svg/670px-Halal_Indonesia.svg.png?20220822124151"
+                        alt="Sertifikat Halal">
+                @endif
 
-                      @if ($hasPirtCode)
-                          <img class="w-6"
-                              src="https://sibakuljogja.jogjaprov.go.id/blog/kukm/wp-content/uploads/sites/111/2023/09/pirt.png"
-                              alt="Sertifikat PIRT">
-                      @endif
+                @if ($hasPirtCode)
+                    <img class="w-6"
+                        src="https://sibakuljogja.jogjaprov.go.id/blog/kukm/wp-content/uploads/sites/111/2023/09/pirt.png"
+                        alt="Sertifikat PIRT">
+                @endif
 
-                      {{-- If neither the Halal image nor the PIRT image are shown, display "No Certificates" --}}
-                      @if (!$showHalalImage && !$hasPirtCode)
-                          <p class="text-gray-600 dark:text-gray-400">No Certificates</p>
-                      @endif
-                  </div>
+                {{-- If neither the Halal image nor the PIRT image are shown, display "No Certificates" --}}
+                @if (!$showHalalImage && !$hasPirtCode)
+                    <p class="text-gray-600 dark:text-gray-400">No Certificates</p>
+                @endif
+            </div>
 
-                  {{-- <div class="flex items-center justify-end gap-1">
+            {{-- <div class="flex items-center justify-end gap-1">
                       <button type="button" data-tooltip-target="tooltip-quick-look"
                           class="rounded-lg p-2 text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
                           <span class="sr-only"> Quick look </span>
@@ -130,15 +129,15 @@ $svgs = [
                           <div class="tooltip-arrow" data-popper-arrow=""></div>
                       </div>
                   </div> --}}
-              </div>
+        </div>
 
-              <a href="#"
-                  class="text-lg font-semibold md:block hidden lg:visible xl:visible 2xl:visible leading-tight text-gray-900 hover:underline dark:text-white">{{ strlen($umkm->nama_umkm) > 25 ? substr($umkm->nama_umkm, 0, 25) . '...' : $umkm->nama_umkm }}</a>
-              <a href="#"
-                  class="text-lg font-semibold visible md:hidden leading-tight whitespace-nowrap text-gray-900 hover:underline dark:text-white">{{ strlen($umkm->nama_umkm) > 10 ? substr($umkm->nama_umkm, 0, 10) . '...' : $umkm->nama_umkm }}</a>
+        <a href="#"
+            class="text-lg font-semibold md:block hidden lg:visible xl:visible 2xl:visible leading-tight text-gray-900 hover:underline dark:text-white">{{ strlen($umkm->nama_umkm) > 25 ? substr($umkm->nama_umkm, 0, 25) . '...' : $umkm->nama_umkm }}</a>
+        <a href="#"
+            class="text-lg font-semibold visible md:hidden leading-tight whitespace-nowrap text-gray-900 hover:underline dark:text-white">{{ strlen($umkm->nama_umkm) > 10 ? substr($umkm->nama_umkm, 0, 10) . '...' : $umkm->nama_umkm }}</a>
 
-              <div class="mt-2 flex items-center gap-2">
-                  {{-- <div class="flex items-center">
+        <div class="mt-2 flex items-center gap-2">
+            {{-- <div class="flex items-center">
                       <svg class="h-4 w-4 text-yellow-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
                           fill="currentColor" viewBox="0 0 24 24">
                           <path
@@ -170,312 +169,311 @@ $svgs = [
                       </svg>
                   </div> --}}
 
-                  {{-- <p class="text-sm hidden md:visible font-medium text-gray-900 dark:text-white">5.0</p>
+            {{-- <p class="text-sm hidden md:visible font-medium text-gray-900 dark:text-white">5.0</p>
                   <p class="text-sm font-medium text-gray-500 dark:text-gray-400">(455)</p> --}}
-              </div>
+        </div>
 
-              <ul class="mt-2 flex items-center gap-4">
-                  <li class="flex items-center gap-2">
-                      <svg class="h-4 w-4" fill="#3e3838" height="200px" width="200px" version="1.1" id="Layer_1"
-                          xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-                          viewBox="0 0 512 512" xml:space="preserve" stroke="#3e3838">
-                          <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-                          <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
-                          <g id="SVGRepo_iconCarrier">
-                              <g>
-                                  <g>
-                                      <path
-                                          d="M469.289,48.943H361.93c-5.632,0-10.199,4.566-10.199,10.199v187.747h-69.976v-83.336V10.199 C281.755,4.566,277.188,0,271.556,0h-61.352c-5.632,0-10.199,4.566-10.199,10.199v143.154h-22.538V96.892 c0-5.633-4.567-10.199-10.199-10.199c-5.632,0-10.199,4.566-10.199,10.199v56.461h-11.034c-5.632,0-10.199,4.566-10.199,10.199 v49.619H83.634v-37.745c0-5.633-4.567-10.199-10.199-10.199s-10.199,4.566-10.199,10.199v37.746H42.711 c-5.632,0-10.199,4.566-10.199,10.199v278.429c0,5.633,4.567,10.199,10.199,10.199h426.578c5.632,0,10.199-4.566,10.199-10.199 V59.142C479.488,53.509,474.921,48.943,469.289,48.943z M135.835,491.602H52.91V233.571h82.925V491.602z M261.357,491.602H156.233 v-317.85h105.123V491.602z M261.357,153.353h-40.954V20.398h40.954V153.353z M351.723,491.602h-69.968V267.286h69.968V491.602z M459.09,491.602h-86.96V69.341h86.96V491.602z">
-                                      </path>
-                                  </g>
-                              </g>
-                              <g>
-                                  <g>
-                                      <path
-                                          d="M186.276,199.033c-5.632,0-10.199,4.566-10.199,10.199v13.542c0,5.633,4.566,10.199,10.199,10.199 c5.632,0,10.199-4.566,10.199-10.199v-13.542C196.475,203.6,191.908,199.033,186.276,199.033z">
-                                      </path>
-                                  </g>
-                              </g>
-                              <g>
-                                  <g>
-                                      <path
-                                          d="M229.781,199.033c-5.632,0-10.199,4.566-10.199,10.199v13.542c0,5.633,4.567,10.199,10.199,10.199 c5.632,0,10.199-4.566,10.199-10.199v-13.542C239.98,203.6,235.413,199.033,229.781,199.033z">
-                                      </path>
-                                  </g>
-                              </g>
-                              <g>
-                                  <g>
-                                      <path
-                                          d="M240.656,105.499c-5.632,0-10.199,4.566-10.199,10.199v13.542c0,5.633,4.567,10.199,10.199,10.199 s10.199-4.566,10.199-10.199v-13.542C250.856,110.065,246.289,105.499,240.656,105.499z">
-                                      </path>
-                                  </g>
-                              </g>
-                              <g>
-                                  <g>
-                                      <path
-                                          d="M240.656,52.206c-5.632,0-10.199,4.566-10.199,10.199v13.542c0,5.633,4.567,10.199,10.199,10.199 s10.199-4.566,10.199-10.199V62.405C250.856,56.772,246.289,52.206,240.656,52.206z">
-                                      </path>
-                                  </g>
-                              </g>
-                              <g>
-                                  <g>
-                                      <path
-                                          d="M186.276,258.412c-5.632,0-10.199,4.566-10.199,10.199v13.542c0,5.633,4.566,10.199,10.199,10.199 c5.632,0,10.199-4.566,10.199-10.199v-13.542C196.475,262.978,191.908,258.412,186.276,258.412z">
-                                      </path>
-                                  </g>
-                              </g>
-                              <g>
-                                  <g>
-                                      <path
-                                          d="M229.781,258.412c-5.632,0-10.199,4.566-10.199,10.199v13.542c0,5.633,4.567,10.199,10.199,10.199 c5.632,0,10.199-4.566,10.199-10.199v-13.542C239.98,262.978,235.413,258.412,229.781,258.412z">
-                                      </path>
-                                  </g>
-                              </g>
-                              <g>
-                                  <g>
-                                      <path
-                                          d="M186.276,313.622c-5.632,0-10.199,4.566-10.199,10.199v13.543c0,5.633,4.566,10.199,10.199,10.199 c5.632,0,10.199-4.566,10.199-10.199v-13.542C196.475,318.189,191.908,313.622,186.276,313.622z">
-                                      </path>
-                                  </g>
-                              </g>
-                              <g>
-                                  <g>
-                                      <path
-                                          d="M229.781,313.622c-5.632,0-10.199,4.566-10.199,10.199v13.543c0,5.633,4.567,10.199,10.199,10.199 c5.632,0,10.199-4.566,10.199-10.199v-13.542C239.98,318.189,235.413,313.622,229.781,313.622z">
-                                      </path>
-                                  </g>
-                              </g>
-                              <g>
-                                  <g>
-                                      <path
-                                          d="M186.276,373.001c-5.632,0-10.199,4.566-10.199,10.199v13.543c0,5.633,4.566,10.199,10.199,10.199 c5.632,0,10.199-4.566,10.199-10.199V383.2C196.475,377.567,191.908,373.001,186.276,373.001z">
-                                      </path>
-                                  </g>
-                              </g>
-                              <g>
-                                  <g>
-                                      <path
-                                          d="M229.781,373.001c-5.632,0-10.199,4.566-10.199,10.199v13.543c0,5.633,4.567,10.199,10.199,10.199 c5.632,0,10.199-4.566,10.199-10.199V383.2C239.98,377.567,235.413,373.001,229.781,373.001z">
-                                      </path>
-                                  </g>
-                              </g>
-                              <g>
-                                  <g>
-                                      <path
-                                          d="M186.276,432.379c-5.632,0-10.199,4.566-10.199,10.199v13.543c0,5.633,4.566,10.199,10.199,10.199 c5.632,0,10.199-4.566,10.199-10.199v-13.542C196.475,436.945,191.908,432.379,186.276,432.379z">
-                                      </path>
-                                  </g>
-                              </g>
-                              <g>
-                                  <g>
-                                      <path
-                                          d="M229.781,432.379c-5.632,0-10.199,4.566-10.199,10.199v13.543c0,5.633,4.567,10.199,10.199,10.199 c5.632,0,10.199-4.566,10.199-10.199v-13.542C239.98,436.945,235.413,432.379,229.781,432.379z">
-                                      </path>
-                                  </g>
-                              </g>
-                              <g>
-                                  <g>
-                                      <path
-                                          d="M398.361,199.033c-5.632,0-10.199,4.566-10.199,10.199v13.542c0,5.633,4.567,10.199,10.199,10.199 c5.632,0,10.199-4.566,10.199-10.199v-13.542C408.56,203.6,403.993,199.033,398.361,199.033z">
-                                      </path>
-                                  </g>
-                              </g>
-                              <g>
-                                  <g>
-                                      <path
-                                          d="M436.427,199.033c-5.632,0-10.199,4.566-10.199,10.199v13.542c0,5.633,4.567,10.199,10.199,10.199 s10.199-4.566,10.199-10.199v-13.542C446.626,203.6,442.059,199.033,436.427,199.033z">
-                                      </path>
-                                  </g>
-                              </g>
-                              <g>
-                                  <g>
-                                      <path
-                                          d="M398.361,258.412c-5.632,0-10.199,4.566-10.199,10.199v13.542c0,5.633,4.567,10.199,10.199,10.199 c5.632,0,10.199-4.566,10.199-10.199v-13.542C408.56,262.978,403.993,258.412,398.361,258.412z">
-                                      </path>
-                                  </g>
-                              </g>
-                              <g>
-                                  <g>
-                                      <path
-                                          d="M436.427,258.412c-5.632,0-10.199,4.566-10.199,10.199v13.542c0,5.633,4.567,10.199,10.199,10.199 s10.199-4.566,10.199-10.199v-13.542C446.626,262.978,442.059,258.412,436.427,258.412z">
-                                      </path>
-                                  </g>
-                              </g>
-                              <g>
-                                  <g>
-                                      <path
-                                          d="M398.361,313.622c-5.632,0-10.199,4.566-10.199,10.199v13.543c0,5.633,4.567,10.199,10.199,10.199 c5.632,0,10.199-4.566,10.199-10.199v-13.542C408.56,318.189,403.993,313.622,398.361,313.622z">
-                                      </path>
-                                  </g>
-                              </g>
-                              <g>
-                                  <g>
-                                      <path
-                                          d="M436.427,313.622c-5.632,0-10.199,4.566-10.199,10.199v13.543c0,5.633,4.567,10.199,10.199,10.199 s10.199-4.566,10.199-10.199v-13.542C446.626,318.189,442.059,313.622,436.427,313.622z">
-                                      </path>
-                                  </g>
-                              </g>
-                              <g>
-                                  <g>
-                                      <path
-                                          d="M398.361,85.688c-5.632,0-10.199,4.566-10.199,10.199v13.543c0,5.633,4.567,10.199,10.199,10.199 c5.632,0,10.199-4.566,10.199-10.199V95.887C408.56,90.254,403.993,85.688,398.361,85.688z">
-                                      </path>
-                                  </g>
-                              </g>
-                              <g>
-                                  <g>
-                                      <path
-                                          d="M436.427,85.688c-5.632,0-10.199,4.566-10.199,10.199v13.543c0,5.633,4.567,10.199,10.199,10.199 s10.199-4.566,10.199-10.199V95.887C446.626,90.254,442.059,85.688,436.427,85.688z">
-                                      </path>
-                                  </g>
-                              </g>
-                              <g>
-                                  <g>
-                                      <path
-                                          d="M398.361,140.899c-5.632,0-10.199,4.566-10.199,10.199v13.542c0,5.633,4.567,10.199,10.199,10.199 c5.632,0,10.199-4.566,10.199-10.199v-13.542C408.56,145.465,403.993,140.899,398.361,140.899z">
-                                      </path>
-                                  </g>
-                              </g>
-                              <g>
-                                  <g>
-                                      <path
-                                          d="M436.427,140.899c-5.632,0-10.199,4.566-10.199,10.199v13.542c0,5.633,4.567,10.199,10.199,10.199 s10.199-4.566,10.199-10.199v-13.542C446.626,145.465,442.059,140.899,436.427,140.899z">
-                                      </path>
-                                  </g>
-                              </g>
-                              <g>
-                                  <g>
-                                      <path
-                                          d="M398.361,373.001c-5.632,0-10.199,4.566-10.199,10.199v13.543c0,5.633,4.567,10.199,10.199,10.199 c5.632,0,10.199-4.566,10.199-10.199V383.2C408.56,377.567,403.993,373.001,398.361,373.001z">
-                                      </path>
-                                  </g>
-                              </g>
-                              <g>
-                                  <g>
-                                      <path
-                                          d="M436.427,373.001c-5.632,0-10.199,4.566-10.199,10.199v13.543c0,5.633,4.567,10.199,10.199,10.199 s10.199-4.566,10.199-10.199V383.2C446.626,377.567,442.059,373.001,436.427,373.001z">
-                                      </path>
-                                  </g>
-                              </g>
-                              <g>
-                                  <g>
-                                      <path
-                                          d="M398.361,432.379c-5.632,0-10.199,4.566-10.199,10.199v13.543c0,5.633,4.567,10.199,10.199,10.199 c5.632,0,10.199-4.566,10.199-10.199v-13.542C408.56,436.945,403.993,432.379,398.361,432.379z">
-                                      </path>
-                                  </g>
-                              </g>
-                              <g>
-                                  <g>
-                                      <path
-                                          d="M436.427,432.379c-5.632,0-10.199,4.566-10.199,10.199v13.543c0,5.633,4.567,10.199,10.199,10.199 s10.199-4.566,10.199-10.199v-13.542C446.626,436.945,442.059,432.379,436.427,432.379z">
-                                      </path>
-                                  </g>
-                              </g>
-                              <g>
-                                  <g>
-                                      <path
-                                          d="M113.405,253.414H76.428c-5.632,0-10.199,4.566-10.199,10.199s4.567,10.199,10.199,10.199h36.978 c5.632,0,10.199-4.566,10.199-10.199S119.038,253.414,113.405,253.414z">
-                                      </path>
-                                  </g>
-                              </g>
-                              <g>
-                                  <g>
-                                      <path
-                                          d="M113.405,292.928H76.428c-5.632,0-10.199,4.566-10.199,10.199c0,5.633,4.567,10.199,10.199,10.199h36.978 c5.632,0,10.199-4.566,10.199-10.199C123.605,297.494,119.038,292.928,113.405,292.928z">
-                                      </path>
-                                  </g>
-                              </g>
-                              <g>
-                                  <g>
-                                      <path
-                                          d="M113.405,333.718H76.428c-5.632,0-10.199,4.566-10.199,10.199c0,5.633,4.567,10.199,10.199,10.199h36.978 c5.632,0,10.199-4.566,10.199-10.199C123.605,338.284,119.038,333.718,113.405,333.718z">
-                                      </path>
-                                  </g>
-                              </g>
-                              <g>
-                                  <g>
-                                      <path
-                                          d="M113.405,373.232H76.428c-5.632,0-10.199,4.566-10.199,10.199c0,5.633,4.567,10.199,10.199,10.199h36.978 c5.632,0,10.199-4.566,10.199-10.199C123.605,377.798,119.038,373.232,113.405,373.232z">
-                                      </path>
-                                  </g>
-                              </g>
-                              <g>
-                                  <g>
-                                      <path
-                                          d="M113.405,414.021H76.428c-5.632,0-10.199,4.566-10.199,10.199c0,5.633,4.567,10.199,10.199,10.199h36.978 c5.632,0,10.199-4.566,10.199-10.199C123.605,418.588,119.038,414.021,113.405,414.021z">
-                                      </path>
-                                  </g>
-                              </g>
-                              <g>
-                                  <g>
-                                      <path
-                                          d="M113.405,453.535H76.428c-5.632,0-10.199,4.566-10.199,10.199c0,5.633,4.567,10.199,10.199,10.199h36.978 c5.632,0,10.199-4.566,10.199-10.199C123.605,458.101,119.038,453.535,113.405,453.535z">
-                                      </path>
-                                  </g>
-                              </g>
-                              <g>
-                                  <g>
-                                      <path
-                                          d="M328.753,281.692H302.65c-5.632,0-10.199,4.566-10.199,10.199c0,5.633,4.567,10.199,10.199,10.199h26.103 c5.632,0,10.199-4.566,10.199-10.199C338.952,286.258,334.385,281.692,328.753,281.692z">
-                                      </path>
-                                  </g>
-                              </g>
-                              <g>
-                                  <g>
-                                      <path
-                                          d="M328.753,329.547H302.65c-5.632,0-10.199,4.566-10.199,10.199c0,5.633,4.567,10.199,10.199,10.199h26.103 c5.632,0,10.199-4.566,10.199-10.199C338.952,334.114,334.385,329.547,328.753,329.547z">
-                                      </path>
-                                  </g>
-                              </g>
-                              <g>
-                                  <g>
-                                      <path
-                                          d="M328.753,378.489H302.65c-5.632,0-10.199,4.566-10.199,10.199c0,5.633,4.567,10.199,10.199,10.199h26.103 c5.632,0,10.199-4.566,10.199-10.199C338.952,383.056,334.385,378.489,328.753,378.489z">
-                                      </path>
-                                  </g>
-                              </g>
-                              <g>
-                                  <g>
-                                      <path
-                                          d="M328.753,428.52H302.65c-5.632,0-10.199,4.566-10.199,10.199c0,5.633,4.567,10.199,10.199,10.199h26.103 c5.632,0,10.199-4.566,10.199-10.199C338.952,433.086,334.385,428.52,328.753,428.52z">
-                                      </path>
-                                  </g>
-                              </g>
-                              <g>
-                                  <g>
-                                      <path
-                                          d="M167.267,43.857c-5.632,0-10.199,4.566-10.199,10.199v12.239c0,5.633,4.567,10.199,10.199,10.199 c5.632,0,10.199-4.566,10.199-10.199V54.056C177.466,48.423,172.899,43.857,167.267,43.857z">
-                                      </path>
-                                  </g>
-                              </g>
-                          </g>
-                      </svg>
-                      <p
-                          class="text-sm font-medium text-gray-500 dark:text-gray-400 overflow-hidden whitespace-nowrap max-w-[10ch]">
-                          {{ strlen($umkm->kota) > 10 ? substr($umkm->kota, 0, 10) . '...' : $umkm->kota }}
-                      </p>
+        <ul class="mt-2 flex items-center gap-4">
+            <li class="flex items-center gap-2">
+                <svg class="h-4 w-4" fill="#3e3838" height="200px" width="200px" version="1.1" id="Layer_1"
+                    xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512"
+                    xml:space="preserve" stroke="#3e3838">
+                    <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                    <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                    <g id="SVGRepo_iconCarrier">
+                        <g>
+                            <g>
+                                <path
+                                    d="M469.289,48.943H361.93c-5.632,0-10.199,4.566-10.199,10.199v187.747h-69.976v-83.336V10.199 C281.755,4.566,277.188,0,271.556,0h-61.352c-5.632,0-10.199,4.566-10.199,10.199v143.154h-22.538V96.892 c0-5.633-4.567-10.199-10.199-10.199c-5.632,0-10.199,4.566-10.199,10.199v56.461h-11.034c-5.632,0-10.199,4.566-10.199,10.199 v49.619H83.634v-37.745c0-5.633-4.567-10.199-10.199-10.199s-10.199,4.566-10.199,10.199v37.746H42.711 c-5.632,0-10.199,4.566-10.199,10.199v278.429c0,5.633,4.567,10.199,10.199,10.199h426.578c5.632,0,10.199-4.566,10.199-10.199 V59.142C479.488,53.509,474.921,48.943,469.289,48.943z M135.835,491.602H52.91V233.571h82.925V491.602z M261.357,491.602H156.233 v-317.85h105.123V491.602z M261.357,153.353h-40.954V20.398h40.954V153.353z M351.723,491.602h-69.968V267.286h69.968V491.602z M459.09,491.602h-86.96V69.341h86.96V491.602z">
+                                </path>
+                            </g>
+                        </g>
+                        <g>
+                            <g>
+                                <path
+                                    d="M186.276,199.033c-5.632,0-10.199,4.566-10.199,10.199v13.542c0,5.633,4.566,10.199,10.199,10.199 c5.632,0,10.199-4.566,10.199-10.199v-13.542C196.475,203.6,191.908,199.033,186.276,199.033z">
+                                </path>
+                            </g>
+                        </g>
+                        <g>
+                            <g>
+                                <path
+                                    d="M229.781,199.033c-5.632,0-10.199,4.566-10.199,10.199v13.542c0,5.633,4.567,10.199,10.199,10.199 c5.632,0,10.199-4.566,10.199-10.199v-13.542C239.98,203.6,235.413,199.033,229.781,199.033z">
+                                </path>
+                            </g>
+                        </g>
+                        <g>
+                            <g>
+                                <path
+                                    d="M240.656,105.499c-5.632,0-10.199,4.566-10.199,10.199v13.542c0,5.633,4.567,10.199,10.199,10.199 s10.199-4.566,10.199-10.199v-13.542C250.856,110.065,246.289,105.499,240.656,105.499z">
+                                </path>
+                            </g>
+                        </g>
+                        <g>
+                            <g>
+                                <path
+                                    d="M240.656,52.206c-5.632,0-10.199,4.566-10.199,10.199v13.542c0,5.633,4.567,10.199,10.199,10.199 s10.199-4.566,10.199-10.199V62.405C250.856,56.772,246.289,52.206,240.656,52.206z">
+                                </path>
+                            </g>
+                        </g>
+                        <g>
+                            <g>
+                                <path
+                                    d="M186.276,258.412c-5.632,0-10.199,4.566-10.199,10.199v13.542c0,5.633,4.566,10.199,10.199,10.199 c5.632,0,10.199-4.566,10.199-10.199v-13.542C196.475,262.978,191.908,258.412,186.276,258.412z">
+                                </path>
+                            </g>
+                        </g>
+                        <g>
+                            <g>
+                                <path
+                                    d="M229.781,258.412c-5.632,0-10.199,4.566-10.199,10.199v13.542c0,5.633,4.567,10.199,10.199,10.199 c5.632,0,10.199-4.566,10.199-10.199v-13.542C239.98,262.978,235.413,258.412,229.781,258.412z">
+                                </path>
+                            </g>
+                        </g>
+                        <g>
+                            <g>
+                                <path
+                                    d="M186.276,313.622c-5.632,0-10.199,4.566-10.199,10.199v13.543c0,5.633,4.566,10.199,10.199,10.199 c5.632,0,10.199-4.566,10.199-10.199v-13.542C196.475,318.189,191.908,313.622,186.276,313.622z">
+                                </path>
+                            </g>
+                        </g>
+                        <g>
+                            <g>
+                                <path
+                                    d="M229.781,313.622c-5.632,0-10.199,4.566-10.199,10.199v13.543c0,5.633,4.567,10.199,10.199,10.199 c5.632,0,10.199-4.566,10.199-10.199v-13.542C239.98,318.189,235.413,313.622,229.781,313.622z">
+                                </path>
+                            </g>
+                        </g>
+                        <g>
+                            <g>
+                                <path
+                                    d="M186.276,373.001c-5.632,0-10.199,4.566-10.199,10.199v13.543c0,5.633,4.566,10.199,10.199,10.199 c5.632,0,10.199-4.566,10.199-10.199V383.2C196.475,377.567,191.908,373.001,186.276,373.001z">
+                                </path>
+                            </g>
+                        </g>
+                        <g>
+                            <g>
+                                <path
+                                    d="M229.781,373.001c-5.632,0-10.199,4.566-10.199,10.199v13.543c0,5.633,4.567,10.199,10.199,10.199 c5.632,0,10.199-4.566,10.199-10.199V383.2C239.98,377.567,235.413,373.001,229.781,373.001z">
+                                </path>
+                            </g>
+                        </g>
+                        <g>
+                            <g>
+                                <path
+                                    d="M186.276,432.379c-5.632,0-10.199,4.566-10.199,10.199v13.543c0,5.633,4.566,10.199,10.199,10.199 c5.632,0,10.199-4.566,10.199-10.199v-13.542C196.475,436.945,191.908,432.379,186.276,432.379z">
+                                </path>
+                            </g>
+                        </g>
+                        <g>
+                            <g>
+                                <path
+                                    d="M229.781,432.379c-5.632,0-10.199,4.566-10.199,10.199v13.543c0,5.633,4.567,10.199,10.199,10.199 c5.632,0,10.199-4.566,10.199-10.199v-13.542C239.98,436.945,235.413,432.379,229.781,432.379z">
+                                </path>
+                            </g>
+                        </g>
+                        <g>
+                            <g>
+                                <path
+                                    d="M398.361,199.033c-5.632,0-10.199,4.566-10.199,10.199v13.542c0,5.633,4.567,10.199,10.199,10.199 c5.632,0,10.199-4.566,10.199-10.199v-13.542C408.56,203.6,403.993,199.033,398.361,199.033z">
+                                </path>
+                            </g>
+                        </g>
+                        <g>
+                            <g>
+                                <path
+                                    d="M436.427,199.033c-5.632,0-10.199,4.566-10.199,10.199v13.542c0,5.633,4.567,10.199,10.199,10.199 s10.199-4.566,10.199-10.199v-13.542C446.626,203.6,442.059,199.033,436.427,199.033z">
+                                </path>
+                            </g>
+                        </g>
+                        <g>
+                            <g>
+                                <path
+                                    d="M398.361,258.412c-5.632,0-10.199,4.566-10.199,10.199v13.542c0,5.633,4.567,10.199,10.199,10.199 c5.632,0,10.199-4.566,10.199-10.199v-13.542C408.56,262.978,403.993,258.412,398.361,258.412z">
+                                </path>
+                            </g>
+                        </g>
+                        <g>
+                            <g>
+                                <path
+                                    d="M436.427,258.412c-5.632,0-10.199,4.566-10.199,10.199v13.542c0,5.633,4.567,10.199,10.199,10.199 s10.199-4.566,10.199-10.199v-13.542C446.626,262.978,442.059,258.412,436.427,258.412z">
+                                </path>
+                            </g>
+                        </g>
+                        <g>
+                            <g>
+                                <path
+                                    d="M398.361,313.622c-5.632,0-10.199,4.566-10.199,10.199v13.543c0,5.633,4.567,10.199,10.199,10.199 c5.632,0,10.199-4.566,10.199-10.199v-13.542C408.56,318.189,403.993,313.622,398.361,313.622z">
+                                </path>
+                            </g>
+                        </g>
+                        <g>
+                            <g>
+                                <path
+                                    d="M436.427,313.622c-5.632,0-10.199,4.566-10.199,10.199v13.543c0,5.633,4.567,10.199,10.199,10.199 s10.199-4.566,10.199-10.199v-13.542C446.626,318.189,442.059,313.622,436.427,313.622z">
+                                </path>
+                            </g>
+                        </g>
+                        <g>
+                            <g>
+                                <path
+                                    d="M398.361,85.688c-5.632,0-10.199,4.566-10.199,10.199v13.543c0,5.633,4.567,10.199,10.199,10.199 c5.632,0,10.199-4.566,10.199-10.199V95.887C408.56,90.254,403.993,85.688,398.361,85.688z">
+                                </path>
+                            </g>
+                        </g>
+                        <g>
+                            <g>
+                                <path
+                                    d="M436.427,85.688c-5.632,0-10.199,4.566-10.199,10.199v13.543c0,5.633,4.567,10.199,10.199,10.199 s10.199-4.566,10.199-10.199V95.887C446.626,90.254,442.059,85.688,436.427,85.688z">
+                                </path>
+                            </g>
+                        </g>
+                        <g>
+                            <g>
+                                <path
+                                    d="M398.361,140.899c-5.632,0-10.199,4.566-10.199,10.199v13.542c0,5.633,4.567,10.199,10.199,10.199 c5.632,0,10.199-4.566,10.199-10.199v-13.542C408.56,145.465,403.993,140.899,398.361,140.899z">
+                                </path>
+                            </g>
+                        </g>
+                        <g>
+                            <g>
+                                <path
+                                    d="M436.427,140.899c-5.632,0-10.199,4.566-10.199,10.199v13.542c0,5.633,4.567,10.199,10.199,10.199 s10.199-4.566,10.199-10.199v-13.542C446.626,145.465,442.059,140.899,436.427,140.899z">
+                                </path>
+                            </g>
+                        </g>
+                        <g>
+                            <g>
+                                <path
+                                    d="M398.361,373.001c-5.632,0-10.199,4.566-10.199,10.199v13.543c0,5.633,4.567,10.199,10.199,10.199 c5.632,0,10.199-4.566,10.199-10.199V383.2C408.56,377.567,403.993,373.001,398.361,373.001z">
+                                </path>
+                            </g>
+                        </g>
+                        <g>
+                            <g>
+                                <path
+                                    d="M436.427,373.001c-5.632,0-10.199,4.566-10.199,10.199v13.543c0,5.633,4.567,10.199,10.199,10.199 s10.199-4.566,10.199-10.199V383.2C446.626,377.567,442.059,373.001,436.427,373.001z">
+                                </path>
+                            </g>
+                        </g>
+                        <g>
+                            <g>
+                                <path
+                                    d="M398.361,432.379c-5.632,0-10.199,4.566-10.199,10.199v13.543c0,5.633,4.567,10.199,10.199,10.199 c5.632,0,10.199-4.566,10.199-10.199v-13.542C408.56,436.945,403.993,432.379,398.361,432.379z">
+                                </path>
+                            </g>
+                        </g>
+                        <g>
+                            <g>
+                                <path
+                                    d="M436.427,432.379c-5.632,0-10.199,4.566-10.199,10.199v13.543c0,5.633,4.567,10.199,10.199,10.199 s10.199-4.566,10.199-10.199v-13.542C446.626,436.945,442.059,432.379,436.427,432.379z">
+                                </path>
+                            </g>
+                        </g>
+                        <g>
+                            <g>
+                                <path
+                                    d="M113.405,253.414H76.428c-5.632,0-10.199,4.566-10.199,10.199s4.567,10.199,10.199,10.199h36.978 c5.632,0,10.199-4.566,10.199-10.199S119.038,253.414,113.405,253.414z">
+                                </path>
+                            </g>
+                        </g>
+                        <g>
+                            <g>
+                                <path
+                                    d="M113.405,292.928H76.428c-5.632,0-10.199,4.566-10.199,10.199c0,5.633,4.567,10.199,10.199,10.199h36.978 c5.632,0,10.199-4.566,10.199-10.199C123.605,297.494,119.038,292.928,113.405,292.928z">
+                                </path>
+                            </g>
+                        </g>
+                        <g>
+                            <g>
+                                <path
+                                    d="M113.405,333.718H76.428c-5.632,0-10.199,4.566-10.199,10.199c0,5.633,4.567,10.199,10.199,10.199h36.978 c5.632,0,10.199-4.566,10.199-10.199C123.605,338.284,119.038,333.718,113.405,333.718z">
+                                </path>
+                            </g>
+                        </g>
+                        <g>
+                            <g>
+                                <path
+                                    d="M113.405,373.232H76.428c-5.632,0-10.199,4.566-10.199,10.199c0,5.633,4.567,10.199,10.199,10.199h36.978 c5.632,0,10.199-4.566,10.199-10.199C123.605,377.798,119.038,373.232,113.405,373.232z">
+                                </path>
+                            </g>
+                        </g>
+                        <g>
+                            <g>
+                                <path
+                                    d="M113.405,414.021H76.428c-5.632,0-10.199,4.566-10.199,10.199c0,5.633,4.567,10.199,10.199,10.199h36.978 c5.632,0,10.199-4.566,10.199-10.199C123.605,418.588,119.038,414.021,113.405,414.021z">
+                                </path>
+                            </g>
+                        </g>
+                        <g>
+                            <g>
+                                <path
+                                    d="M113.405,453.535H76.428c-5.632,0-10.199,4.566-10.199,10.199c0,5.633,4.567,10.199,10.199,10.199h36.978 c5.632,0,10.199-4.566,10.199-10.199C123.605,458.101,119.038,453.535,113.405,453.535z">
+                                </path>
+                            </g>
+                        </g>
+                        <g>
+                            <g>
+                                <path
+                                    d="M328.753,281.692H302.65c-5.632,0-10.199,4.566-10.199,10.199c0,5.633,4.567,10.199,10.199,10.199h26.103 c5.632,0,10.199-4.566,10.199-10.199C338.952,286.258,334.385,281.692,328.753,281.692z">
+                                </path>
+                            </g>
+                        </g>
+                        <g>
+                            <g>
+                                <path
+                                    d="M328.753,329.547H302.65c-5.632,0-10.199,4.566-10.199,10.199c0,5.633,4.567,10.199,10.199,10.199h26.103 c5.632,0,10.199-4.566,10.199-10.199C338.952,334.114,334.385,329.547,328.753,329.547z">
+                                </path>
+                            </g>
+                        </g>
+                        <g>
+                            <g>
+                                <path
+                                    d="M328.753,378.489H302.65c-5.632,0-10.199,4.566-10.199,10.199c0,5.633,4.567,10.199,10.199,10.199h26.103 c5.632,0,10.199-4.566,10.199-10.199C338.952,383.056,334.385,378.489,328.753,378.489z">
+                                </path>
+                            </g>
+                        </g>
+                        <g>
+                            <g>
+                                <path
+                                    d="M328.753,428.52H302.65c-5.632,0-10.199,4.566-10.199,10.199c0,5.633,4.567,10.199,10.199,10.199h26.103 c5.632,0,10.199-4.566,10.199-10.199C338.952,433.086,334.385,428.52,328.753,428.52z">
+                                </path>
+                            </g>
+                        </g>
+                        <g>
+                            <g>
+                                <path
+                                    d="M167.267,43.857c-5.632,0-10.199,4.566-10.199,10.199v12.239c0,5.633,4.567,10.199,10.199,10.199 c5.632,0,10.199-4.566,10.199-10.199V54.056C177.466,48.423,172.899,43.857,167.267,43.857z">
+                                </path>
+                            </g>
+                        </g>
+                    </g>
+                </svg>
+                <p
+                    class="text-sm font-medium text-gray-500 dark:text-gray-400 overflow-hidden whitespace-nowrap max-w-[10ch]">
+                    {{ strlen($umkm->kota) > 10 ? substr($umkm->kota, 0, 10) . '...' : $umkm->kota }}
+                </p>
 
-                  </li>
+            </li>
 
-                  <li class="flex items-center gap-2">
-                      <svg class="w-4 h-4  hidden md:flex text-gray-500 dark:text-white" aria-hidden="true"
-                          xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
-                          viewBox="0 0 24 24">
-                          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                              d="m8 8-4 4 4 4m8 0 4-4-4-4m-2-3-4 14" />
-                      </svg>
+            <li class="flex items-center gap-2">
+                <svg class="w-4 h-4  hidden md:flex text-gray-500 dark:text-white" aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="m8 8-4 4 4 4m8 0 4-4-4-4m-2-3-4 14" />
+                </svg>
 
-                      <p class="text-sm font-medium hidden md:flex text-gray-500 dark:text-gray-400">
-                          {{ $umkm->no_umkm }}</p>
-                  </li>
-              </ul>
+                <p class="text-sm font-medium hidden md:flex text-gray-500 dark:text-gray-400">
+                    {{ $umkm->no_umkm }}</p>
+            </li>
+        </ul>
 
-              <div class="mt-4 flex items-center gap-3 justify-between whitespace-nowrap">
-                  <p class="text-2xl font-extrabold leading-tight text-gray-900 dark:text-white">{{ $umkm->id }}</p>
-                  <a href="{{ route('binaan.detail', $umkm->no_umkm) }}"
-                      class="text-white bg-blue-700 p-[0.5rem] hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm md:px-5 md:py-2.5 md:me-2 md:mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
-                      <p class=" text-xs">View Details</p>
-                  </a>
-              </div>
-          </div>
-      </div>
+        <div class="mt-4 flex items-center gap-3 justify-between whitespace-nowrap">
+            <p class="text-2xl font-extrabold leading-tight text-gray-900 dark:text-white">{{ $umkm->id }}</p>
+            <a href="{{ route('binaan.detail', $umkm->no_umkm) }}"
+                class="text-white bg-blue-700 p-[0.5rem] hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm md:px-5 md:py-2.5 md:me-2 md:mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
+                <p class=" text-xs">View Details</p>
+            </a>
+        </div>
+    </div>
+</div>

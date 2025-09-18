@@ -121,18 +121,18 @@
                     maxZoom: 19,
                     attribution: '&copy; <a href=\'http://www.openstreetmap.org/copyright\'>OpenStreetMap</a>',
                 }).addTo(this.map);
-        
+
                 const marker = L.marker([this.latitude, this.longitude]).addTo(this.map);
-        
+
                 this.map.on('click', (e) => {
                     const lat = e.latlng.lat;
                     const lng = e.latlng.lng;
                     marker.setLatLng([lat, lng]);
-        
+
                     // Update Alpine state
                     this.latitude = lat;
                     this.longitude = lng;
-        
+
                     // Use Livewire's entangle to automatically sync
                     @this.latitude = lat;
                     @this.longitude = lng;
@@ -145,6 +145,14 @@
         <div class="">
             <input type="" id="latitude" wire:model="latitude">
             <input type="" id="longitude" wire:model="longitude">
+            <div class="mb-4">
+                <label for="kota" class="block text-gray-700 text-sm font-bold mb-2">Kota</label>
+                <input type="text" id="kota" wire:model.defer="kota"
+                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                @error('kota')
+                    <span class="text-red-500 text-xs italic">{{ $message }}</span>
+                @enderror
+            </div>
         </div>
     </div>
 

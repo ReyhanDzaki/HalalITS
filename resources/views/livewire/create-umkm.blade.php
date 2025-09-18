@@ -15,7 +15,7 @@
                         <div class="px-4 py-5 grid grid-cols-2 gap-3 rounded-xl bg-white">
                             <div class="mb-4">
                                 <label for="no_umkm" class="block text-gray-700 text-sm font-bold mb-2">No
-                                    UMKM:</label>
+                                    UMKM: <span class="text-red-600">*</span></label>
                                 <input type="text" id="no_umkm" wire:model="no_umkm"
                                     class="shadow-sm border rounded w-full py-2 px-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
                                     aria-label="No UMKM">
@@ -26,7 +26,7 @@
 
                             <div class="mb-4">
                                 <label for="nama_pemilik" class="block text-gray-700 text-sm font-bold mb-2">Nama
-                                    Pemilik:</label>
+                                    Pemilik:<span class="text-red-600">*</span></label>
                                 <input type="text" id="nama_pemilik" wire:model="nama_pemilik"
                                     class="shadow-sm border rounded w-full py-2 px-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
                                     aria-label="Nama Pemilik">
@@ -37,7 +37,7 @@
 
                             <div class="mb-4">
                                 <label for="nama_umkm" class="block text-gray-700 text-sm font-bold mb-2">Nama
-                                    UMKM:</label>
+                                    UMKM:<span class="text-red-600">*</span></label>
                                 <input type="text" id="nama_umkm" wire:model="nama_umkm"
                                     class="shadow-sm border rounded w-full py-2 px-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
                                     aria-label="Nama UMKM" required>
@@ -85,7 +85,7 @@
 
                             <div class="mb-4">
                                 <label for="created_by" class="block text-gray-700 text-sm font-bold mb-2">Penanggung
-                                    Jawab</label>
+                                    Jawab <span class="text-red-600">*</span></label>
                                 <input type="text" id="created_by" wire:model="created_by"
                                     class="shadow-sm border rounded w-full py-2 px-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
                                     aria-label="created_by">
